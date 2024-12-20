@@ -1,0 +1,11 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: my-app
+logging:
+  level:
+    root: info
+open.weather:
+  sdk:
+    key: bd5e378503939ddaee76f12ad7a97608
