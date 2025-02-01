@@ -1,11 +1,20 @@
 server:
   port: 8081
 spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: root
+    username: root
+    url: jdbc:postgresql://localhost:5432/myapp
   application:
     name: my-app
-logging:
-  level:
-    root: info
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 open.weather:
   sdk:
     key: bd5e378503939ddaee76f12ad7a97608

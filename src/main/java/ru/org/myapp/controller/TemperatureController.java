@@ -1,6 +1,7 @@
 package ru.org.myapp.controller;
 
-
+import com.example.config.annotation.AuditExecution;
+import com.example.config.annotation.LogExecution;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,9 @@ import ru.org.myapp.service.TemperatureService;
 @RequiredArgsConstructor
 public class TemperatureController {
     private final TemperatureService temperatureService;
-
+    //http://localhost:8081/api/v1/temp?city=Vladivostok
+    @AuditExecution
+    @LogExecution
     @GetMapping("/temp")
     public ResponseEntity<String> getTemperature(@RequestParam String city) {
         return new ResponseEntity<>(temperatureService.getTemperature(city), HttpStatus.OK);
