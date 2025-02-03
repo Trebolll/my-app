@@ -4,6 +4,7 @@ import com.example.config.annotation.AuditExecution;
 import com.example.config.annotation.LogExecution;
 import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

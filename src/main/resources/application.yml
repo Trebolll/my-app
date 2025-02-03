@@ -26,6 +26,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 open.weather:
   sdk:
-    key: bd5e378503939ddaee76f12ad7a97608
+    key: 7e37c875a0722eb2f61a58b26135b98d
 
 
