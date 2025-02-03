@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v-1.0.1" author="morev">
+        <createTable tableName="response_log">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="value" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="responseBody" type="text">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="integer">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="requestLogId" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -11,6 +11,6 @@ import ru.org.myapp.exception.WeatherServiceException;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(WeatherServiceException.class)
     public ResponseEntity<String> handleWeatherException(WeatherServiceException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

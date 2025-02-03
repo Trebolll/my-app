@@ -1,6 +1,15 @@
+com:
+  example:
+   config:
+     log-execution:
+        enabled: true
+     audit-execution:
+      enabled: true
 server:
-  port: 8081
+  port: 8080
 spring:
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
   datasource:
     driver-class-name: org.postgresql.Driver
     password: root
@@ -10,7 +19,7 @@ spring:
     name: my-app
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -18,3 +27,5 @@ spring:
 open.weather:
   sdk:
     key: bd5e378503939ddaee76f12ad7a97608
+
+
