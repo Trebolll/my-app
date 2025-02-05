@@ -28,15 +28,19 @@
             <div class="input-group location-search-input-group me-3">
                 <input id="city-input" class="form-control" type="text" name="name" placeholder="Enter location" required>
                 <button class="btn btn-outline-secondary btn-sm clear-input-button" type="button"
-                        onclick="this.previousElementSibling.value=''">
+                        onclick="clearInput()">
                     &times;
                 </button>
             </div>
             <button id="search-button" class="btn btn-outline-success">Search</button>
+            <button id="forecast-button" class="btn btn-outline-primary ms-3" style="display: none;">Forecast</button>
         </div>
 
         <div id="weather-results">
             <!-- Weather results will be displayed here -->
+        </div>
+        <div id="forecast-results" class="mt-4">
+            <!-- Forecast results will be displayed here -->
         </div>
     </div>
 </section>
@@ -59,10 +63,30 @@
                     success: function(weather) {
                         console.log('Weather data received:', weather);
                         displayWeather(weather);
+                        $('#forecast-button').show();
                     },
                     error: function(xhr, status, error) {
                         console.error('Error retrieving weather data:', status, error);
                         alert('Error retrieving weather data');
+                    }
+                });
+            }
+        });
+
+        $('#forecast-button').click(function() {
+            var city = $('#city-input').val();
+            if (city) {
+                $.ajax({
+                    url: '/api/v1/forecast',
+                    method: 'GET',
+                    data: { city: city },
+                    success: function(forecast) {
+                        console.log('Forecast data received:', forecast);
+                        displayForecast(forecast);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error retrieving forecast data:', status, error);
+                        alert('Error retrieving forecast data');
                     }
                 });
             }
@@ -95,6 +119,36 @@
                 </div>
             `;
             $('#weather-results').html(weatherHtml);
+            $('#forecast-results').empty();
+        }
+
+        function displayForecast(forecast) {
+            var forecastHtml = forecast.map(function(forecastItem) {
+                return `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">${new Date(forecastItem.forecastTime).toLocaleString()}</h5>
+                            <img src="${forecastItem.weatherState.weatherIconUrl}" alt="Weather icon" class="weather-icon">
+                            <p class="card-text">Temperature: ${forecastItem.temperature.value}°C (Feels like: ${forecastItem.temperature.feelsLike}°C)</p>
+                            <p class="card-text">Weather: ${forecastItem.weatherState.description}</p>
+                            <p class="card-text">Humidity: ${forecastItem.humidity.value}%</p>
+                            <p class="card-text">Pressure: ${forecastItem.atmosphericPressure.value} ${forecastItem.atmosphericPressure.unit}</p>
+                            <p class="card-text">Wind: ${forecastItem.wind.speed} ${forecastItem.wind.unit} at ${forecastItem.wind.degrees}°</p>
+                            <p class="card-text">Cloudiness: ${forecastItem.clouds.value}${forecastItem.clouds.unit}</p>
+                            <p class="card-text">Rain (last 3 hours): ${forecastItem.rain.threeHourLevel} ${forecastItem.rain.unit}</p>
+                            <p class="card-text">Snow (last 3 hours): ${forecastItem.snow.threeHourLevel} ${forecastItem.snow.unit}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            $('#forecast-results').html(forecastHtml);
+        }
+
+        function clearInput() {
+            $('#city-input').val('');
+            $('#forecast-button').hide();
+            $('#weather-results').empty();
+            $('#forecast-results').empty();
         }
     });
 </script>

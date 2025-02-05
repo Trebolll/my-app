@@ -6,10 +6,12 @@ section#page-content {
     min-height: calc(100vh - 164px);
 }
 
-.weather-card {
+.weather-card, .forecast-card {
     margin-bottom: 20px;
-    max-width: 400px; /* Устанавливаем максимальную ширину карточки */
+    width: 100%; /* Устанавливаем ширину карточки на весь экран */
+    max-width: 600px; /* Устанавливаем максимальную ширину карточки */
     margin: 0 auto; /* Центрируем карточку */
+    border: 1px solid #ddd; /* Уменьшаем толщину рамки */
 }
 
 .weather-card .weather-card-delete-form {
@@ -17,7 +19,7 @@ section#page-content {
     right: 8px;
 }
 
-.weather-card img {
+.weather-card img, .forecast-card img {
     max-height: 150px;
     object-fit: contain;
 }
@@ -32,4 +34,11 @@ section#page-content {
 
 .location-search-input-group .clear-input-button {
     border-color: rgb(222, 226, 230);
+}
+
+.weather-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px;
 }
