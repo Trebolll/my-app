@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Viewer – Search Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="weather-app.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            Weather Tracker
+        </a>
+        <div class="d-flex align-items-center">
+            <span class="navbar-text me-3">morev</span>
+            <button class="btn btn-outline-danger">Sign out</button>
+        </div>
+    </div>
+</nav>
+
+<section id="page-content">
+    <div class="container mt-4">
+        <div class="d-flex my-4">
+            <div class="input-group location-search-input-group me-3">
+                <input id="city-input" class="form-control" type="text" name="name" placeholder="Enter location" required>
+                <button class="btn btn-outline-secondary btn-sm clear-input-button" type="button"
+                        onclick="this.previousElementSibling.value=''">
+                    &times;
+                </button>
+            </div>
+            <button id="search-button" class="btn btn-outline-success">Search</button>
+        </div>
+
+        <div id="weather-results">
+            <!-- Weather results will be displayed here -->
+        </div>
+    </div>
+</section>
+
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 border-top">
+    <div class="px-4">
+        <span>© Weather Viewer, project from <a href="https://github.com/Trebolll/my-app/">morev/java-backend</a> rgs.</span>
+    </div>
+</footer>
+
+<script>
+    $(document).ready(function() {
+        $('#search-button').click(function() {
+            var city = $('#city-input').val();
+            if (city) {
+                $.ajax({
+                    url: '/api/v1/weather',
+                    method: 'GET',
+                    data: { city: city },
+                    success: function(weather) {
+                        console.log('Weather data received:', weather);
+                        displayWeather(weather);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error retrieving weather data:', status, error);
+                        alert('Error retrieving weather data');
+                    }
+                });
+            }
+        });
+
+        function displayWeather(weather) {
+            var weatherHtml = `
+                <div class="card h-100 position-relative weather-card">
+                    <div class="position-absolute weather-card-delete-form">
+                        <button class="btn-close" aria-label="Delete"></button>
+                    </div>
+                    <img class="card-img-top img-fluid"
+                         src="${weather.weatherStateDto.weatherIconUrl}"
+                         alt="Weather icon">
+                    <div class="card-body d-flex flex-column">
+                        <h1 class="card-text">${weather.temperatureDto.value}°C</h1>
+                        <h3 class="card-title">${weather.locationDto.name}, ${weather.locationDto.countryCode}</h3>
+                        <p class="card-text mb-1">Feels like <span>${weather.temperatureDto.feelsLike}</span>°C.
+                            <span>${weather.weatherStateDto.description}</span>
+                        </p>
+                        <p class="card-text mb-1">Humidity: ${weather.humidityDto.value}%</p>
+                        <p class="card-text mb-1">Pressure: ${weather.atmosphericPressureDto.value} ${weather.atmosphericPressureDto.unit}</p>
+                        <p class="card-text mb-1">Wind: ${weather.windDto.speed} ${weather.windDto.unit} at ${weather.windDto.degrees}°</p>
+                        <p class="card-text mb-1">Cloudiness: ${weather.cloudsDto.value}${weather.cloudsDto.unit}</p>
+                        <p class="card-text mb-1">Rain (last 3 hours): ${weather.rainDto.threeHourLevel} ${weather.rainDto.unit}</p>
+                        <p class="card-text mb-1">Snow (last 3 hours): ${weather.snowDto.threeHourLevel} ${weather.snowDto.unit}</p>
+                        <p class="card-text mb-1">Sunrise: ${new Date(weather.locationDto.sunriseTime).toLocaleTimeString()}</p>
+                        <p class="card-text mb-1">Sunset: ${new Date(weather.locationDto.sunsetTime).toLocaleTimeString()}</p>
+                    </div>
+                </div>
+            `;
+            $('#weather-results').html(weatherHtml);
+        }
+    });
+</script>
+
+</body>
+</html>

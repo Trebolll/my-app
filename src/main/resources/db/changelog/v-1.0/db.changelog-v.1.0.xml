@@ -7,5 +7,15 @@
 
     <include file="1-request_log-table.xml" relativeToChangelogFile="true"/>
     <include file="2-response_log-table.xml" relativeToChangelogFile="true"/>
-<!--    <include file="3-weather-table.xml" relativeToChangelogFile="true"/>-->
+    <include file="3-weather_state-table.xml" relativeToChangelogFile="true"/>
+    <include file="4-temperature-table.xml" relativeToChangelogFile="true"/>
+    <include file="5-atmospheric_pressure-table.xml" relativeToChangelogFile="true"/>
+    <include file="6-humidity-table.xml" relativeToChangelogFile="true"/>
+    <include file="7-wind-table.xml" relativeToChangelogFile="true"/>
+    <include file="8-rain-table.xml" relativeToChangelogFile="true"/>
+    <include file="9-snow-table.xml" relativeToChangelogFile="true"/>
+    <include file="10-clouds-table.xml" relativeToChangelogFile="true"/>
+    <include file="11-coordinate-table.xml" relativeToChangelogFile="true"/>
+    <include file="12-location-table.xml" relativeToChangelogFile="true"/>
+    <include file="13-weather-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

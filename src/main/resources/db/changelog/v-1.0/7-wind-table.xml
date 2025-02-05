@@ -5,32 +5,20 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="v-1.0.1" author="morev">
-        <createTable tableName="response_log">
-            <column name="id" type="UUID">
+    <changeSet id="v-1.0.6" author="morev">
+        <createTable tableName="wind_entity">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-
-            <column name="value" type="varchar(255)">
+            <column name="speed" type="DOUBLE">
                 <constraints nullable="true"/>
             </column>
-
-            <column name="response_body" type="text">
+            <column name="degrees" type="DOUBLE">
                 <constraints nullable="true"/>
             </column>
-
-            <column name="timestamp" type="timestamp">
+            <column name="unit" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-
-            <column name="status" type="integer">
-                <constraints nullable="true"/>
-            </column>
-
-            <column name="request_log_id" type="uuid">
-                <constraints nullable="true"/>
-            </column>
-
         </createTable>
     </changeSet>
 

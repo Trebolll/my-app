@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "humidityEntity")
+@Table(name = "humidity_entity")
 public  class HumidityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,16 +20,16 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "atmosphericPressureEntity")
+@Table(name = "atmospheric_pressure_entity")
 public  class AtmosphericPressureEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "value")
     private Double value;
-    @Column(name = "seaLevelValue")
+    @Column(name = "sea_level_value")
     private Double seaLevelValue;
-    @Column(name = "groundLevelValue")
+    @Column(name = "ground_level_value")
     private Double groundLevelValue;
     @Column(name = "unit")
     private String unit;

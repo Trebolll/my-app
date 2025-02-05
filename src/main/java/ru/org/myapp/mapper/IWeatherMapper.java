@@ -1,12 +1,30 @@
 package ru.org.myapp.mapper;
 
-import com.github.prominence.openweathermap.api.model.*;
-import com.github.prominence.openweathermap.api.model.weather.*;
+import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.Clouds;
+import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.Temperature;
+import com.github.prominence.openweathermap.api.model.WeatherState;
+import com.github.prominence.openweathermap.api.model.weather.Location;
+import com.github.prominence.openweathermap.api.model.weather.Rain;
+import com.github.prominence.openweathermap.api.model.weather.Snow;
+import com.github.prominence.openweathermap.api.model.weather.Weather;
+import com.github.prominence.openweathermap.api.model.weather.Wind;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import ru.org.myapp.dto.WeatherDto;
-import ru.org.myapp.entity.*;
+import ru.org.myapp.entity.AtmosphericPressureEntity;
+import ru.org.myapp.entity.CloudsEntity;
+import ru.org.myapp.entity.CoordinateEntity;
+import ru.org.myapp.entity.HumidityEntity;
+import ru.org.myapp.entity.LocationEntity;
+import ru.org.myapp.entity.RainEntity;
+import ru.org.myapp.entity.SnowEntity;
+import ru.org.myapp.entity.TemperatureEntity;
+import ru.org.myapp.entity.WeatherEntity;
+import ru.org.myapp.entity.WindEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface IWeatherMapper {
@@ -31,6 +49,7 @@ public interface IWeatherMapper {
     @Mapping(target = "snowDto", source = "snowEntity")
     @Mapping(target = "cloudsDto", source = "clouds")
     @Mapping(target = "locationDto", source = "location")
+    @Mapping(target = "weatherStateDto", source = "weatherStateEntity")
     WeatherDto toDto(WeatherEntity weatherEntity);
 
     WeatherDto.WeatherStateDto toWeatherStateDto(WeatherState weatherState);

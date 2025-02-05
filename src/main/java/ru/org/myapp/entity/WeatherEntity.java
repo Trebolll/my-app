@@ -17,35 +17,38 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "weather")
+@Table(name = "weather_entity")
 public class WeatherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "calculationTime")
+    @Column(name = "calculation_time")
     private LocalDateTime calculationTime;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "temperatureEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "weather_state_id", referencedColumnName = "id")
+    private WeatherStateEntity weatherStateEntity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "temperature_entity_id", referencedColumnName = "id")
     private TemperatureEntity temperatureEntity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "atmosphericPressureEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "atmospheric_pressure_entity_id", referencedColumnName = "id")
     private AtmosphericPressureEntity atmosphericPressureEntity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "humidityEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "humidity_entity_id", referencedColumnName = "id")
     private HumidityEntity humidityEntity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "windEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "wind_entity_id", referencedColumnName = "id")
     private WindEntity windEntity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rainEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "rain_entity_id", referencedColumnName = "id")
     private RainEntity rainEntity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "snowEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "snow_entity_id", referencedColumnName = "id")
     private SnowEntity snowEntity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clouds_id", referencedColumnName = "id")
+    @JoinColumn(name = "clouds_entity_id", referencedColumnName = "id")
     private CloudsEntity clouds;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @JoinColumn(name = "location_entity_id", referencedColumnName = "id")
     private LocationEntity location;
 }

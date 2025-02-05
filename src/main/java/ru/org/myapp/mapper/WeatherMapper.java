@@ -13,16 +13,7 @@ import com.github.prominence.openweathermap.api.model.weather.Snow;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.Wind;
 import ru.org.myapp.dto.WeatherDto;
-import ru.org.myapp.entity.AtmosphericPressureEntity;
-import ru.org.myapp.entity.CloudsEntity;
-import ru.org.myapp.entity.CoordinateEntity;
-import ru.org.myapp.entity.HumidityEntity;
-import ru.org.myapp.entity.LocationEntity;
-import ru.org.myapp.entity.RainEntity;
-import ru.org.myapp.entity.SnowEntity;
-import ru.org.myapp.entity.TemperatureEntity;
-import ru.org.myapp.entity.WeatherEntity;
-import ru.org.myapp.entity.WindEntity;
+import ru.org.myapp.entity.*;
 
 public class WeatherMapper {
     public static WeatherDto toDto(Weather weather) {
@@ -174,6 +165,7 @@ public class WeatherMapper {
         }
         WeatherEntity weatherEntity = new WeatherEntity();
         weatherEntity.setCalculationTime(weather.getCalculationTime());
+        weatherEntity.setWeatherStateEntity(toWeatherStateEntity(weather.getWeatherState()));
         weatherEntity.setTemperatureEntity(toTemperatureEntity(weather.getTemperature()));
         weatherEntity.setAtmosphericPressureEntity(toAtmosphericPressureEntity(weather.getAtmosphericPressure()));
         weatherEntity.setHumidityEntity(toHumidityEntity(weather.getHumidity()));
@@ -183,6 +175,19 @@ public class WeatherMapper {
         weatherEntity.setClouds(toCloudsEntity(weather.getClouds()));
         weatherEntity.setLocation(toLocationEntity(weather.getLocation()));
         return weatherEntity;
+    }
+
+    private static WeatherStateEntity toWeatherStateEntity(WeatherState weatherState) {
+        if (weatherState == null) {
+            return null;
+        }
+        WeatherStateEntity weatherStateEntity = new WeatherStateEntity();
+        weatherStateEntity.setName(weatherState.getName());
+        weatherStateEntity.setDescription(weatherState.getDescription());
+        weatherStateEntity.setIconId(weatherState.getIconId());
+        weatherStateEntity.setWeatherConditionEnum(weatherStateEntity.getWeatherConditionEnum());
+        weatherStateEntity.setWeatherIconUrl(weatherState.getWeatherIconUrl());
+        return weatherStateEntity;
     }
 
     private static TemperatureEntity toTemperatureEntity(Temperature temperature) {
@@ -233,7 +238,7 @@ public class WeatherMapper {
 
     private static RainEntity toRainEntity(Rain rain) {
         if (rain == null) {
-            return new RainEntity(null, 0.0, 0.0,"mm");
+            return new RainEntity(null, 0.0, 0.0, "mm");
         }
         RainEntity rainEntity = new RainEntity();
         rainEntity.setThreeHourLevel(rain.getThreeHourLevel());
@@ -244,7 +249,7 @@ public class WeatherMapper {
 
     private static SnowEntity toSnowEntity(Snow snow) {
         if (snow == null) {
-            return new SnowEntity(null, 0.0, 0.0,"mm");
+            return new SnowEntity(null, 0.0, 0.0, "mm");
         }
         SnowEntity snowEntity = new SnowEntity();
         snowEntity.setThreeHourLevel(snow.getThreeHourLevel());

@@ -20,15 +20,15 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "rainEntity")
+@Table(name = "rain_entity")
 public class RainEntity {
     private static final String DEFAULT_UNIT = "mm";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "oneHourLevel")
+    @Column(name = "one_Hour_Level")
     private Double oneHourLevel;
-    @Column(name = "threeHourLevel")
+    @Column(name = "three_Hour_Level")
     private Double threeHourLevel;
     @Column(name = "unit")
     private String unit;

@@ -15,15 +15,15 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="requestMethod" type="varchar(255)">
+            <column name="request_method" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="httpMethod" type="varchar(255)">
+            <column name="http_method" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="requestUrl" type="varchar(255)">
+            <column name="request_url" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
 

@@ -20,18 +20,18 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "temperatureEntity")
+@Table(name = "temperature_entity")
 public  class TemperatureEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "value")
     private Double value;
-    @Column(name = "maxTemperature")
+    @Column(name = "max_temperature")
     private Double maxTemperature;
-    @Column(name = "minTemperature")
+    @Column(name = "min_temperature")
     private Double minTemperature;
-    @Column(name = "feelsLike")
+    @Column(name = "feels_like")
     private Double feelsLike;
     @Column(name = "unit")
     private String unit;

@@ -68,5 +68,4 @@ public record WeatherForecastDto(
             Byte value,
             String unit
     ) {}
-
 }

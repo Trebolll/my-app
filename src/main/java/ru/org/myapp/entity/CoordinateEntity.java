@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "coordinateEntity")
+@Table(name = "coordinate_entity")
 public class CoordinateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

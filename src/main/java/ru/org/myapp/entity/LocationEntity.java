@@ -26,22 +26,22 @@ import java.time.ZoneOffset;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "locationEntity")
+@Table(name = "location_entity")
 public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "countryCode")
+    @Column(name = "country_code")
     private String countryCode;
-    @Column(name = "sunriseTime")
+    @Column(name = "sunrise_time")
     private LocalDateTime sunriseTime;
-    @Column(name = "sunsetTime")
+    @Column(name = "sunset_time")
     private LocalDateTime sunsetTime;
-    @Column(name = "zoneOffset")
+    @Column(name = "zone_offset")
     private ZoneOffset zoneOffset;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "coordinateEntity_id", referencedColumnName = "id")
+    @JoinColumn(name = "coordinate_entity_id", referencedColumnName = "id")
     private CoordinateEntity coordinate;
 }
