@@ -41,7 +41,7 @@ public class LocationEntity {
     private LocalDateTime sunsetTime;
     @Column(name = "zoneOffset")
     private ZoneOffset zoneOffset;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "coordinateEntity_id", referencedColumnName = "id")
     private CoordinateEntity coordinate;
 }

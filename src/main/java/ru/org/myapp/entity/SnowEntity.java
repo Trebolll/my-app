@@ -22,6 +22,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "snowEntity")
 public class SnowEntity {
+    private static final String DEFAULT_UNIT = "mm";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,5 +30,7 @@ public class SnowEntity {
     private Double threeHourLevel;
     @Column(name = "oneHourLevel")
     private Double oneHourLevel;
+    @Column(name = "unit")
+    private String unit;
 
 }

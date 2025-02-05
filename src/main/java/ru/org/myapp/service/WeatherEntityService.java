@@ -1,18 +1,22 @@
 package ru.org.myapp.service;
 
+import com.github.prominence.openweathermap.api.model.weather.Weather;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.entity.WeatherEntity;
+import ru.org.myapp.mapper.IWeatherMapper;
 import ru.org.myapp.repository.WeatherEntityRepository;
 
 @Service
 @RequiredArgsConstructor
 public class WeatherEntityService {
-   private final WeatherEntityRepository weatherEntityRepository;
+    private final WeatherEntityRepository weatherEntityRepository;
+    private final IWeatherMapper weatherMapper;
 
     @Transactional
-    public WeatherEntity saveEntity(WeatherEntity weatherEntity) {
-        return weatherEntityRepository.save(weatherEntity);
+    public WeatherDto saveEntity(WeatherEntity weatherEntity) {
+        return weatherMapper.toDto(weatherEntityRepository.save(weatherEntity));
     }
 }

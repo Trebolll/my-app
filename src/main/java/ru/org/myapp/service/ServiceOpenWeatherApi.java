@@ -9,6 +9,7 @@ import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.entity.WeatherEntity;
 import ru.org.myapp.exception.WeatherServiceException;
+import ru.org.myapp.mapper.IWeatherMapper;
 import ru.org.myapp.mapper.WeatherForecastMapper;
 import ru.org.myapp.mapper.WeatherMapper;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class ServiceOpenWeatherApi {
     private final OpenWeatherMapClient client;
     private final WeatherEntityService weatherEntityService;
+    private final IWeatherMapper weatherMapper;
 
     public WeatherDto getWeather(String city) {
         try {
@@ -29,9 +31,8 @@ public class ServiceOpenWeatherApi {
                     .unitSystem(UnitSystem.METRIC)
                     .retrieve()
                     .asJava();
-            WeatherEntity weatherEntity = WeatherMapper.toEntity(weather);
-            weatherEntityService.saveEntity(weatherEntity);
-            return WeatherMapper.toDto(weather);
+            var weatherEntity = weatherEntityService.saveEntity(WeatherMapper.toEntity(weather));
+            return weatherEntity;
         } catch (Exception e) {
             throw new WeatherServiceException(e.getMessage());
         }

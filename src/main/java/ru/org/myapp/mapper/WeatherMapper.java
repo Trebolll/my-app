@@ -108,11 +108,13 @@ public class WeatherMapper {
             return WeatherDto.RainDto.builder()
                     .oneHourLevel(0.0)
                     .threeHourLevel(0.0)
+                    .unit("mm")
                     .build();
         }
         return new WeatherDto.RainDto(
                 rain.getThreeHourLevel(),
-                rain.getOneHourLevel()
+                rain.getOneHourLevel(),
+                rain.getUnit()
         );
     }
 
@@ -121,11 +123,13 @@ public class WeatherMapper {
             return WeatherDto.SnowDto.builder()
                     .oneHourLevel(0.0)
                     .threeHourLevel(0.0)
+                    .unit("mm")
                     .build();
         }
         return new WeatherDto.SnowDto(
                 snow.getThreeHourLevel(),
-                snow.getOneHourLevel()
+                snow.getOneHourLevel(),
+                snow.getUnit()
         );
     }
 
@@ -229,17 +233,18 @@ public class WeatherMapper {
 
     private static RainEntity toRainEntity(Rain rain) {
         if (rain == null) {
-            return new RainEntity(null, 0.0, 0.0);
+            return new RainEntity(null, 0.0, 0.0,"mm");
         }
         RainEntity rainEntity = new RainEntity();
         rainEntity.setThreeHourLevel(rain.getThreeHourLevel());
         rainEntity.setOneHourLevel(rainEntity.getOneHourLevel());
+        rainEntity.setUnit(rain.getUnit());
         return rainEntity;
     }
 
     private static SnowEntity toSnowEntity(Snow snow) {
         if (snow == null) {
-            return new SnowEntity(null, 0.0, 0.0);
+            return new SnowEntity(null, 0.0, 0.0,"mm");
         }
         SnowEntity snowEntity = new SnowEntity();
         snowEntity.setThreeHourLevel(snow.getThreeHourLevel());

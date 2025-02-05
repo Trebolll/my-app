@@ -55,12 +55,13 @@ public record WeatherDto (
     @Builder
     public record RainDto(
             Double threeHourLevel,
-            Double oneHourLevel
-    ) {}
+            Double oneHourLevel,
+            String unit) {}
     @Builder
     public record SnowDto(
             Double threeHourLevel,
-            Double oneHourLevel
+            Double oneHourLevel,
+            String unit
     ) {}
     @Builder
     public record CloudsDto(

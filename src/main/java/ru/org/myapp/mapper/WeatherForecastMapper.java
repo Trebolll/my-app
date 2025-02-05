@@ -108,11 +108,13 @@ public class WeatherForecastMapper {
             return WeatherForecastDto.RainDto.builder()
                     .oneHourLevel(0.0)
                     .threeHourLevel(0.0)
+                    .unit("mm")
                     .build();
         }
         return WeatherForecastDto.RainDto.builder()
                 .threeHourLevel(rain.getThreeHourLevel())
                 .oneHourLevel(rain.getThreeHourLevel() / 3)
+                .unit(rain.getUnit())
                 .build();
     }
 
@@ -121,11 +123,13 @@ public class WeatherForecastMapper {
             return WeatherForecastDto.SnowDto.builder()
                     .oneHourLevel(0.0)
                     .threeHourLevel(0.0)
+                    .unit("mm")
                     .build();
         }
         return WeatherForecastDto.SnowDto.builder()
                 .threeHourLevel(snow.getThreeHourLevel())
                 .oneHourLevel(snow.getThreeHourLevel() / 3)
+                .unit(snow.getUnit())
                 .build();
     }
 
