@@ -7,4 +7,5 @@
 
     <include file="1-request_log-table.xml" relativeToChangelogFile="true"/>
     <include file="2-response_log-table.xml" relativeToChangelogFile="true"/>
+<!--    <include file="3-weather-table.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
