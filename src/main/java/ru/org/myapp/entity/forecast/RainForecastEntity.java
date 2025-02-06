@@ -1,11 +1,6 @@
-package ru.org.myapp.entity;
+package ru.org.myapp.entity.forecast;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -20,9 +15,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "snow_entity")
-public class SnowEntity {
-    private static final String DEFAULT_UNIT = "mm";
+public class RainForecastEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,5 +25,4 @@ public class SnowEntity {
     private Double oneHourLevel;
     @Column(name = "unit")
     private String unit;
-
 }

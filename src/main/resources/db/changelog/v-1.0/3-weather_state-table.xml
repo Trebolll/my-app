@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="v-1.0.2" author="morev">
+    <changeSet id="v-1.0.2" author="mark_morev">
         <createTable tableName="weather_state_entity">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>

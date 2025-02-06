@@ -1,4 +1,4 @@
-package ru.org.myapp.entity;
+package ru.org.myapp.entity.weather;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,19 +20,17 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "temperature_entity")
-public  class TemperatureEntity {
+@Table(name = "snow_entity")
+public class SnowEntity {
+    private static final String DEFAULT_UNIT = "mm";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "value")
-    private Double value;
-    @Column(name = "max_temperature")
-    private Double maxTemperature;
-    @Column(name = "min_temperature")
-    private Double minTemperature;
-    @Column(name = "feels_like")
-    private Double feelsLike;
+    @Column(name = "three_hour_level")
+    private Double threeHourLevel;
+    @Column(name = "one_hour_level")
+    private Double oneHourLevel;
     @Column(name = "unit")
     private String unit;
+
 }

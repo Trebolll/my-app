@@ -5,36 +5,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="v-1.0.11" author="mark_morev">
-        <createTable tableName="location_entity">
+    <changeSet id="v-1.0.0" author="mark_morev">
+        <createTable tableName="weather_state_forecast_entity">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="country_code" type="VARCHAR(255)">
+            <column name="description" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="sunrise_time" type="TIMESTAMP">
+            <column name="icon_id" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="sunset_time" type="TIMESTAMP">
+            <column name="weather_condition_enum" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="zone_offset" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="coordinate_entity_id" type="BIGINT">
+            <column name="weather_icon_url" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
         </createTable>
-
-        <addForeignKeyConstraint baseTableName="location_entity"
-                                 baseColumnNames="coordinate_entity_id"
-                                 constraintName="fk_location_coordinate"
-                                 referencedTableName="coordinate_entity"
-                                 referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>

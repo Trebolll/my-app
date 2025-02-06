@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="1-weather_state_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="2-temperature_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="3-atmospheric_pressure_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="4-humidity_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="5-wind_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="6-rain_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="7-snow_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="8-clouds_forecast-table.xml" relativeToChangelogFile="true"/>
+    <include file="9-weather_forecast-table.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

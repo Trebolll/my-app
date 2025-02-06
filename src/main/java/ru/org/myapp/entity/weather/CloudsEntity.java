@@ -1,4 +1,4 @@
-package ru.org.myapp.entity;
+package ru.org.myapp.entity.weather;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,15 +20,13 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "wind_entity")
-public class WindEntity {
+@Table(name = "clouds_entity")
+public class CloudsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "speed")
-    private Double speed;
-    @Column(name = "degrees")
-    private Double degrees;
+    @Column(name = "value")
+    private Byte value;
     @Column(name = "unit")
     private String unit;
 }

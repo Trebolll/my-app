@@ -1,7 +1,11 @@
-package ru.org.myapp.entity;
-
+package ru.org.myapp.entity.forecast;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @AllArgsConstructor
@@ -10,8 +14,7 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "weather_state_entity")
-public class WeatherStateEntity {
+public class WeatherStateForecastEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,10 +22,10 @@ public class WeatherStateEntity {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "iconId")
+    @Column(name = "icon_id")
     private String iconId;
     @Column(name = "weather_condition_enum")
     private String weatherConditionEnum;
-    @Column(name = "weather_icon_url")
+    @Column(name = "weather_icon_Url")
     private String weatherIconUrl;
 }

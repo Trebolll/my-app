@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v-1.0.9" author="mark_morev">
+        <createTable tableName="weather_forecast_entity">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="forecast_time" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="forecast_time_iso" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="day_time" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="weather_state_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="temperature_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="atmospheric_pressure_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="humidity_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="wind_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rain_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="snow_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="clouds_forecast_entity_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="weather_state_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_weather_state_forecast"
+                                 referencedTableName="weather_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="temperature_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_temperature_forecast"
+                                 referencedTableName="temperature_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="atmospheric_pressure_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_pressure_forecast"
+                                 referencedTableName="atmospheric_pressure_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="humidity_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_humidity_forecast"
+                                 referencedTableName="humidity_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="wind_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_wind_forecast"
+                                 referencedTableName="weather_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="rain_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_rain_forecast"
+                                 referencedTableName="rain_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="snow_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_snow_forecast"
+                                 referencedTableName="snow_forecast_entity"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="weather_forecast_entity"
+                                 baseColumnNames="clouds_forecast_entity_id"
+                                 constraintName="fk_weather_forecast_clouds_forecast"
+                                 referencedTableName="clouds_forecast_entity"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

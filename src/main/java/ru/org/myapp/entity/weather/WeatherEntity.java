@@ -1,4 +1,4 @@
-package ru.org.myapp.entity;
+package ru.org.myapp.entity.weather;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -13,7 +13,7 @@ import com.github.prominence.openweathermap.api.model.weather.Snow;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.Wind;
 import ru.org.myapp.dto.WeatherDto;
-import ru.org.myapp.entity.*;
+import ru.org.myapp.entity.weather.*;
 
 public class WeatherMapper {
     public static WeatherDto toDto(Weather weather) {

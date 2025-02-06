@@ -1,4 +1,4 @@
-package ru.org.myapp.entity;
+package ru.org.myapp.entity.weather;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,14 +20,13 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "coordinate_entity")
-public class CoordinateEntity {
+@Table(name = "humidity_entity")
+public  class HumidityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "latitude")
-    private double latitude;
-    @Column(name = "longitude")
-    private double longitude;
+    @Column(name = "value")
+    private int value;
+    @Column(name = "unit")
+    private String unit;
 }
-

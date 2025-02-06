@@ -15,16 +15,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import ru.org.myapp.dto.WeatherDto;
-import ru.org.myapp.entity.AtmosphericPressureEntity;
-import ru.org.myapp.entity.CloudsEntity;
-import ru.org.myapp.entity.CoordinateEntity;
-import ru.org.myapp.entity.HumidityEntity;
-import ru.org.myapp.entity.LocationEntity;
-import ru.org.myapp.entity.RainEntity;
-import ru.org.myapp.entity.SnowEntity;
-import ru.org.myapp.entity.TemperatureEntity;
-import ru.org.myapp.entity.WeatherEntity;
-import ru.org.myapp.entity.WindEntity;
+import ru.org.myapp.entity.weather.AtmosphericPressureEntity;
+import ru.org.myapp.entity.weather.CloudsEntity;
+import ru.org.myapp.entity.weather.CoordinateEntity;
+import ru.org.myapp.entity.weather.HumidityEntity;
+import ru.org.myapp.entity.weather.LocationEntity;
+import ru.org.myapp.entity.weather.RainEntity;
+import ru.org.myapp.entity.weather.SnowEntity;
+import ru.org.myapp.entity.weather.TemperatureEntity;
+import ru.org.myapp.entity.weather.WeatherEntity;
+import ru.org.myapp.entity.weather.WindEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface IWeatherMapper {
