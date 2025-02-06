@@ -9,7 +9,6 @@ import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.weather.Location;
 import com.github.prominence.openweathermap.api.model.weather.Rain;
 import com.github.prominence.openweathermap.api.model.weather.Snow;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.Wind;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,17 +28,6 @@ import ru.org.myapp.entity.weather.WindEntity;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface IWeatherMapper {
 
-    @Mapping(target = "calculationTime", source = "calculationTime")
-    @Mapping(target = "temperatureEntity", source = "temperature")
-    @Mapping(target = "atmosphericPressureEntity", source = "atmosphericPressure")
-    @Mapping(target = "humidityEntity", source = "humidity")
-    @Mapping(target = "windEntity", source = "wind")
-    @Mapping(target = "rainEntity", source = "rain")
-    @Mapping(target = "snowEntity", source = "snow")
-    @Mapping(target = "clouds", source = "clouds")
-    @Mapping(target = "location", source = "location")
-    WeatherEntity toEntity(Weather weather);
-
     @Mapping(target = "calculationTimeDto", source = "calculationTime")
     @Mapping(target = "temperatureDto", source = "temperatureEntity")
     @Mapping(target = "atmosphericPressureDto", source = "atmosphericPressureEntity")
@@ -50,7 +38,7 @@ public interface IWeatherMapper {
     @Mapping(target = "cloudsDto", source = "clouds")
     @Mapping(target = "locationDto", source = "location")
     @Mapping(target = "weatherStateDto", source = "weatherStateEntity")
-    WeatherDto toDto(WeatherEntity weatherEntity);
+    WeatherDto EntityToDto(WeatherEntity weatherEntity);
 
     WeatherDto.WeatherStateDto toWeatherStateDto(WeatherState weatherState);
 

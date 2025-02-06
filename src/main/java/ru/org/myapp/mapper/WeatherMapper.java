@@ -13,153 +13,21 @@ import com.github.prominence.openweathermap.api.model.weather.Snow;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.Wind;
 import ru.org.myapp.dto.WeatherDto;
-import ru.org.myapp.entity.weather.*;
+import ru.org.myapp.entity.weather.AtmosphericPressureEntity;
+import ru.org.myapp.entity.weather.CloudsEntity;
+import ru.org.myapp.entity.weather.CoordinateEntity;
+import ru.org.myapp.entity.weather.HumidityEntity;
+import ru.org.myapp.entity.weather.LocationEntity;
+import ru.org.myapp.entity.weather.RainEntity;
+import ru.org.myapp.entity.weather.SnowEntity;
+import ru.org.myapp.entity.weather.TemperatureEntity;
+import ru.org.myapp.entity.weather.WeatherEntity;
+import ru.org.myapp.entity.weather.WeatherStateEntity;
+import ru.org.myapp.entity.weather.WindEntity;
 
 public class WeatherMapper {
-    public static WeatherDto toDto(Weather weather) {
-        if (weather == null) {
-            return null;
-        }
-        return new WeatherDto(
-                weather.getCalculationTime(),
-                toWeatherStateDto(weather.getWeatherState()),
-                toTemperatureDto(weather.getTemperature()),
-                toAtmosphericPressureDto(weather.getAtmosphericPressure()),
-                toHumidityDto(weather.getHumidity()),
-                toWindDto(weather.getWind()),
-                toRainDto(weather.getRain()),
-                toSnowDto(weather.getSnow()),
-                toCloudsDto(weather.getClouds()),
-                toLocationDto(weather.getLocation())
-        );
-    }
 
-    private static WeatherDto.WeatherStateDto toWeatherStateDto(WeatherState weatherState) {
-        if (weatherState == null) {
-            return null;
-        }
-        return new WeatherDto.WeatherStateDto(
-                weatherState.getId(),
-                weatherState.getName(),
-                weatherState.getDescription(),
-                weatherState.getIconId(),
-                weatherState.getWeatherConditionEnum().name(),
-                weatherState.getWeatherIconUrl()
-        );
-    }
-
-    private static WeatherDto.TemperatureDto toTemperatureDto(Temperature temperature) {
-        if (temperature == null) {
-            return null;
-        }
-        return new WeatherDto.TemperatureDto(
-                temperature.getValue(),
-                temperature.getMaxTemperature(),
-                temperature.getMinTemperature(),
-                temperature.getFeelsLike(),
-                temperature.getUnit()
-        );
-    }
-
-    private static WeatherDto.AtmosphericPressureDto toAtmosphericPressureDto(AtmosphericPressure atmosphericPressure) {
-        if (atmosphericPressure == null) {
-            return null;
-        }
-        return new WeatherDto.AtmosphericPressureDto(
-                atmosphericPressure.getValue(),
-                atmosphericPressure.getSeaLevelValue(),
-                atmosphericPressure.getGroundLevelValue(),
-                atmosphericPressure.getUnit()
-        );
-    }
-
-    private static WeatherDto.HumidityDto toHumidityDto(Humidity humidity) {
-        if (humidity == null) {
-            return null;
-        }
-        return new WeatherDto.HumidityDto(
-                humidity.getValue(),
-                humidity.getUnit()
-        );
-    }
-
-    private static WeatherDto.WindDto toWindDto(com.github.prominence.openweathermap.api.model.weather.Wind wind) {
-        if (wind == null) {
-            return null;
-        }
-        return new WeatherDto.WindDto(
-                wind.getSpeed(),
-                wind.getDegrees(),
-                wind.getUnit()
-        );
-    }
-
-    private static WeatherDto.RainDto toRainDto(Rain rain) {
-        if (rain == null) {
-            return WeatherDto.RainDto.builder()
-                    .oneHourLevel(0.0)
-                    .threeHourLevel(0.0)
-                    .unit("mm")
-                    .build();
-        }
-        return new WeatherDto.RainDto(
-                rain.getThreeHourLevel(),
-                rain.getOneHourLevel(),
-                rain.getUnit()
-        );
-    }
-
-    private static WeatherDto.SnowDto toSnowDto(Snow snow) {
-        if (snow == null) {
-            return WeatherDto.SnowDto.builder()
-                    .oneHourLevel(0.0)
-                    .threeHourLevel(0.0)
-                    .unit("mm")
-                    .build();
-        }
-        return new WeatherDto.SnowDto(
-                snow.getThreeHourLevel(),
-                snow.getOneHourLevel(),
-                snow.getUnit()
-        );
-    }
-
-    private static WeatherDto.CloudsDto toCloudsDto(Clouds clouds) {
-        if (clouds == null) {
-            return null;
-        }
-        return new WeatherDto.CloudsDto(
-                clouds.getValue(),
-                clouds.getUnit()
-        );
-    }
-
-    private static WeatherDto.LocationDto toLocationDto(Location location) {
-        if (location == null) {
-            return null;
-        }
-        return new WeatherDto.LocationDto(
-                location.getId(),
-                location.getName(),
-                location.getCountryCode(),
-                location.getSunriseTime(),
-                location.getSunsetTime(),
-                location.getZoneOffset(),
-                toCoordinateDto(location.getCoordinate())
-        );
-    }
-
-    private static WeatherDto.CoordinateDto toCoordinateDto(Coordinate coordinate) {
-        if (coordinate == null) {
-            return null;
-        }
-        return new WeatherDto.CoordinateDto(
-                coordinate.getLatitude(),
-                coordinate.getLongitude()
-        );
-    }
-
-    public static WeatherEntity toEntity(Weather weather) {
+    public static WeatherEntity LibToEntity(Weather weather) {
         if (weather == null) {
             return null;
         }

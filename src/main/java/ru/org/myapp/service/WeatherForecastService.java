@@ -17,7 +17,6 @@ import java.util.List;
 public class WeatherForecastService {
     private final WeatherForecastEntityRepository weatherForecastEntityRepository;
     public List<WeatherForecastEntity> saveList(List<WeatherForecast> weatherForecast) {
-      var weatherForecastEntity =  WeatherForecastMapper.LibToEntityList(weatherForecast);
-      return   weatherForecastEntityRepository.saveAll(weatherForecastEntity);
+      return  weatherForecastEntityRepository.saveAll(WeatherForecastMapper.LibToEntityList(weatherForecast));
     }
 }
