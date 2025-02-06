@@ -13,7 +13,7 @@
             <column name="forecast_time" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
-            <column name="forecast_time_iso" type="varchar(255)">
+            <column name="forecast_time_iso" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
             <column name="day_time" type="varchar(255)">

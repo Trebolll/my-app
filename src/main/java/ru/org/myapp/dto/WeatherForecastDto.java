@@ -1,4 +1,5 @@
 package ru.org.myapp.dto;
+
 import lombok.Builder;
 import java.time.LocalDateTime;
 
@@ -13,7 +14,7 @@ public record WeatherForecastDto(
         RainDto rain,
         SnowDto snow,
         CloudsDto clouds,
-        String forecastTimeISO,
+        LocalDateTime forecastTimeISO,
         String dayTime
 ) {
     @Builder

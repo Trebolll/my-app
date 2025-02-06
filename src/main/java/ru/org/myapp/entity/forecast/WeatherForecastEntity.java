@@ -1,5 +1,6 @@
 package ru.org.myapp.entity.forecast;
 
+import com.github.prominence.openweathermap.api.model.DayTime;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,7 +58,7 @@ public class WeatherForecastEntity {
     @JoinColumn(name = "clouds_forecast_entity_id", referencedColumnName = "id")
     private CloudsForecastEntity cloudsForecastEntity;
     @Column(name = "forecast_time_iso")
-    private String forecastTimeISO;
+    private  LocalDateTime forecastTimeISO;
     @Column(name = "day_time")
     private String dayTime;
 }

@@ -3,6 +3,7 @@ package ru.org.myapp.controller;
 import com.example.config.annotation.AuditExecution;
 import com.example.config.annotation.LogExecution;
 
+import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class WeatherController implements WeatherRestApi {
     @AuditExecution
     @LogExecution
     public ResponseEntity<List<WeatherForecastDto>> getForecast(@RequestParam String city) {
-        return new ResponseEntity<>(serviceOpenWeatherApi.getForecastInfo(city), HttpStatus.OK);
+        var sda = serviceOpenWeatherApi.getForecastInfo(city);
+        return new ResponseEntity<>(sda, HttpStatus.OK);
     }
 }
