@@ -5,7 +5,6 @@ import com.github.prominence.openweathermap.api.model.forecast.Rain;
 import com.github.prominence.openweathermap.api.model.forecast.Snow;
 import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import com.github.prominence.openweathermap.api.model.forecast.Wind;
-import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.entity.forecast.AtmosphericPressureForecastEntity;
 import ru.org.myapp.entity.forecast.CloudsForecastEntity;
 import ru.org.myapp.entity.forecast.HumidityForecastEntity;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WeatherForecastMapper {
-    // Преобразование из WeatherForecast в WeatherForecastEntity
+
     public static WeatherForecastEntity toEntity(WeatherForecast forecast) {
         if (forecast == null) {
             return null;

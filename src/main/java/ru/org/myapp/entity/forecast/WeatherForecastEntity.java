@@ -1,6 +1,5 @@
 package ru.org.myapp.entity.forecast;
 
-import com.github.prominence.openweathermap.api.model.DayTime;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

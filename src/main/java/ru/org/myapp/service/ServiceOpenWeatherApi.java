@@ -3,7 +3,6 @@ package ru.org.myapp.service;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.org.myapp.dto.WeatherDto;
@@ -11,9 +10,6 @@ import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.exception.WeatherServiceException;
 import ru.org.myapp.mapper.IWeatherForecastMapper;
 import ru.org.myapp.mapper.IWeatherMapper;
-import ru.org.myapp.mapper.WeatherForecastMapper;
-import ru.org.myapp.mapper.WeatherMapper;
-import ru.org.myapp.repository.WeatherForecastEntityRepository;
 
 import java.util.List;
 

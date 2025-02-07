@@ -14,6 +14,6 @@ import ru.org.myapp.repository.WeatherEntityRepository;
 public class WeatherEntityService {
     private final WeatherEntityRepository weatherEntityRepository;
     public WeatherEntity saveEntity(Weather weather) {
-        return weatherEntityRepository.save(WeatherMapper.LibToEntity(weather));
+        return weatherEntityRepository.saveAndFlush(WeatherMapper.LibToEntity(weather));
     }
 }

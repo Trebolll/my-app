@@ -1,6 +1,5 @@
 package ru.org.myapp.api;
 
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

@@ -2,8 +2,6 @@ package ru.org.myapp.controller;
 
 import com.example.config.annotation.AuditExecution;
 import com.example.config.annotation.LogExecution;
-
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

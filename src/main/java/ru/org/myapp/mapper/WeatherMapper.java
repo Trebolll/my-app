@@ -12,7 +12,6 @@ import com.github.prominence.openweathermap.api.model.weather.Rain;
 import com.github.prominence.openweathermap.api.model.weather.Snow;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.Wind;
-import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.entity.weather.AtmosphericPressureEntity;
 import ru.org.myapp.entity.weather.CloudsEntity;
 import ru.org.myapp.entity.weather.CoordinateEntity;
