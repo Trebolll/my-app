@@ -5,7 +5,6 @@
     <title>Weather Viewer – Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -32,14 +31,6 @@
                 </button>
             </div>
             <button id="search-button" class="btn btn-outline-success">Search</button>
-            <button id="forecast-button" class="btn btn-outline-primary ms-3" style="display: none;">Forecast</button>
-        </div>
-
-        <div id="weather-results">
-            <!-- Weather results will be displayed here -->
-        </div>
-        <div id="forecast-results" class="mt-4">
-            <!-- Forecast results will be displayed here -->
         </div>
     </div>
 </section>
@@ -51,105 +42,16 @@
 </footer>
 
 <script>
-    $(document).ready(function() {
-        $('#search-button').click(function() {
-            var city = $('#city-input').val();
-            if (city) {
-                $.ajax({
-                    url: '/api/v1/weather',
-                    method: 'GET',
-                    data: { city: city },
-                    success: function(weather) {
-                        console.log('Weather data received:', weather);
-                        $('#forecast-results').empty(); // Очистка списка с прогнозом
-                        displayWeather(weather);
-                        $('#forecast-button').show();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error retrieving weather data:', status, error);
-                        alert('Error retrieving weather data');
-                    }
-                });
-            }
-        });
-
-        $('#forecast-button').click(function() {
-            var city = $('#city-input').val();
-            if (city) {
-                $.ajax({
-                    url: '/api/v1/forecast',
-                    method: 'GET',
-                    data: { city: city },
-                    success: function(forecast) {
-                        console.log('Forecast data received:', forecast); // Логирование данных
-                        displayForecast(forecast);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error retrieving forecast data:', status, error);
-                        alert('Error retrieving forecast data');
-                    }
-                });
-            }
-        });
-
-        function displayWeather(weather) {
-            var weatherHtml = `
-    <div class="card h-100 position-relative weather-card">
-        <div class="position-absolute weather-card-delete-form">
-            <button class="btn-close" aria-label="Delete"></button>
-        </div>
-        <img class="card-img-top img-fluid"
-            src="${weather.weatherStateDto.weatherIconUrl}"
-            alt="Weather icon">
-        <div class="card-body d-flex flex-column">
-            <h1 class="card-text">${weather.temperatureDto.value}°C</h1>
-            <h3 class="card-title">${weather.locationDto.name}, ${weather.locationDto.countryCode}</h3>
-            <p class="card-text mb-1">Feels like <span>${weather.temperatureDto.feelsLike}</span>°C.
-            <span>${weather.weatherStateDto.description}</span>
-            </p>
-            <p class="card-text mb-1">Humidity: ${weather.humidityDto.value}%</p>
-            <p class="card-text mb-1">Pressure: ${weather.atmosphericPressureDto.value} ${weather.atmosphericPressureDto.unit}</p>
-            <p class="card-text mb-1">Wind: ${weather.windDto.speed} ${weather.windDto.unit} at ${weather.windDto.degrees}°</p>
-            <p class="card-text mb-1">Cloudiness: ${weather.cloudsDto.value}${weather.cloudsDto.unit}</p>
-            <p class="card-text mb-1">Rain (last 3 hours): ${weather.rainDto ? weather.rainDto.threeHourLevel : 'N/A'} ${weather.rainDto ? weather.rainDto.unit : ''}</p>
-            <p class="card-text mb-1">Snow (last 3 hours): ${weather.snowDto ? weather.snowDto.threeHourLevel : 'N/A'} ${weather.snowDto ? weather.snowDto.unit : ''}</p>
-            <p class="card-text mb-1">Sunrise: ${new Date(weather.locationDto.sunriseTime).toLocaleTimeString()}</p>
-            <p class="card-text mb-1">Sunset: ${new Date(weather.locationDto.sunsetTime).toLocaleTimeString()}</p>
-        </div>
-    </div>
-    `;
-            $('#weather-results').html(weatherHtml);
-        }
-
-        function displayForecast(forecast) {
-            var forecastHtml = forecast.map(function(forecastItem) {
-                return `
-<div class="card mb-3">
-<div class="card-body">
-<h5 class="card-title">${new Date(forecastItem.forecastTime).toLocaleString()}</h5>
-<img src="${forecastItem.weatherState.weatherIconUrl}" alt="Weather icon" class="weather-icon">
-<p class="card-text">Temperature: ${forecastItem.temperature.value}°C (Feels like: ${forecastItem.temperature.feelsLike}°C)</p>
-<p class="card-text">Weather: ${forecastItem.weatherState.description}</p>
-<p class="card-text">Humidity: ${forecastItem.humidity.value}%</p>
-<p class="card-text">Pressure: ${forecastItem.atmosphericPressure.value} ${forecastItem.atmosphericPressure.unit}</p>
-<p class="card-text">Wind: ${forecastItem.wind.speed} ${forecastItem.wind.unit} at ${forecastItem.wind.degrees}°</p>
-<p class="card-text">Cloudiness: ${forecastItem.clouds.value}${forecastItem.clouds.unit}</p>
-<p class="card-text">Rain (last 3 hours): ${forecastItem.rain ? forecastItem.rain.threeHourLevel : 'N/A'} ${forecastItem.rain ? forecastItem.rain.unit : ''}</p>
-<p class="card-text">Snow (last 3 hours): ${forecastItem.snow ? forecastItem.snow.threeHourLevel : 'N/A'} ${forecastItem.snow ? forecastItem.snow.unit : ''}</p>
-</div>
-</div>
-`;
-            }).join('');
-            $('#forecast-results').html(forecastHtml);
-        }
-
-        function clearInput() {
-            $('#city-input').val('');
-            $('#forecast-button').hide();
-            $('#weather-results').empty();
-            $('#forecast-results').empty();
+    document.getElementById('search-button').addEventListener('click', function() {
+        let city = document.getElementById('city-input').value;
+        if (city) {
+            window.location.href = 'search-results.html?city=' + encodeURIComponent(city);
         }
     });
+
+    function clearInput() {
+        document.getElementById('city-input').value = '';
+    }
 </script>
 
 </body>
