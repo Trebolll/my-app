@@ -3,6 +3,7 @@ package ru.org.myapp.entity.weather;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ import java.time.ZoneOffset;
 public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "country_code")
@@ -41,7 +42,7 @@ public class LocationEntity {
     private LocalDateTime sunsetTime;
     @Column(name = "zone_offset")
     private ZoneOffset zoneOffset;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "coordinate_entity_id", referencedColumnName = "id")
     private CoordinateEntity coordinate;
 }

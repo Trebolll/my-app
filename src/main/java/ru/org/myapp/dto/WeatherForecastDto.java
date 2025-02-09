@@ -19,7 +19,6 @@ public record WeatherForecastDto(
 ) {
     @Builder
     public record WeatherStateDto(
-            int id,
             String name,
             String description,
             String iconId,

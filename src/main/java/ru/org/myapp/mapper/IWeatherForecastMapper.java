@@ -1,9 +1,19 @@
 package ru.org.myapp.mapper;
 
+import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.Clouds;
+import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.Temperature;
+import com.github.prominence.openweathermap.api.model.WeatherState;
+import com.github.prominence.openweathermap.api.model.forecast.Rain;
+import com.github.prominence.openweathermap.api.model.forecast.Snow;
+import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
+import com.github.prominence.openweathermap.api.model.forecast.Wind;
 import org.mapstruct.Mapper;
 
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.entity.forecast.AtmosphericPressureForecastEntity;
 import ru.org.myapp.entity.forecast.CloudsForecastEntity;
@@ -20,20 +30,14 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface IWeatherForecastMapper {
     WeatherForecastDto.WeatherStateDto toWeatherStateDto(WeatherStateForecastEntity entity);
-
     WeatherForecastDto.TemperatureDto toTemperatureDto(TemperatureForecastEntity entity);
-
     WeatherForecastDto.AtmosphericPressureDto toAtmosphericPressureDto(AtmosphericPressureForecastEntity entity);
-
     WeatherForecastDto.HumidityDto toHumidityDto(HumidityForecastEntity entity);
-
     WeatherForecastDto.WindDto toWindDto(WindForecastEntity entity);
-
     WeatherForecastDto.RainDto toRainDto(RainForecastEntity entity);
-
     WeatherForecastDto.SnowDto toSnowDto(SnowForecastEntity entity);
-
     WeatherForecastDto.CloudsDto toCloudsDto(CloudsForecastEntity entity);
+    List<WeatherForecastDto> EntityToDtoList(List<WeatherForecastEntity> entities);
 
     @Mapping(source = "weatherStateForecastEntity", target = "weatherState")
     @Mapping(source = "temperatureForecastEntity", target = "temperature")
@@ -46,8 +50,42 @@ public interface IWeatherForecastMapper {
     @Mapping(source = "forecastTime", target = "forecastTime")
     @Mapping(source = "forecastTimeISO", target = "forecastTimeISO")
     @Mapping(source = "dayTime", target = "dayTime")
-    WeatherForecastDto toDto(WeatherForecastEntity entity);
+    WeatherForecastDto EntityToDto(WeatherForecastEntity entity);
 
-    List<WeatherForecastDto> EntityToDtoList(List<WeatherForecastEntity> entities);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "forecastTimeISO", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "dayTime", source = "dayTime")
+    @Mapping(source = "weatherState", target = "weatherStateForecastEntity", qualifiedByName = "mapWeatherStateForecast")
+    @Mapping(source = "temperature", target = "temperatureForecastEntity")
+    @Mapping(source = "atmosphericPressure", target = "atmosphericPressureForecastEntity")
+    @Mapping(source = "humidity", target = "humidityForecastEntity", qualifiedByName = "mapHumidity")
+    @Mapping(source = "wind", target = "windForecastEntity")
+    @Mapping(source = "rain", target = "rainForecastEntity")
+    @Mapping(source = "snow", target = "snowForecastEntity")
+    @Mapping(source = "clouds", target = "cloudsForecastEntity")
+    WeatherForecastEntity LibToEntity(WeatherForecast forecast);
+    List<WeatherForecastEntity> LibToEntityList(List<WeatherForecast> forecasts);
+
+    @Named("mapWeatherStateForecast")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "iconId", source = "iconId")
+    @Mapping(target = "weatherConditionEnum", source = "weatherConditionEnum")
+    @Mapping(target = "weatherIconUrl", source = "weatherIconUrl")
+    WeatherStateForecastEntity mapWeatherStateForecast(WeatherState weatherState);
+    TemperatureForecastEntity toTemperatureForecastEntity(Temperature temperature);
+    AtmosphericPressureForecastEntity toAtmosphericPressureForecastEntity(AtmosphericPressure atmosphericPressure);
+
+    @Named("mapHumidity")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "value", source = "value")
+    @Mapping(target = "unit", source = "unit")
+    HumidityForecastEntity mapHumidity(Humidity humidity);
+    WindForecastEntity toWindForecastEntity(Wind wind);
+    RainForecastEntity toRainForecastEntity(Rain rain);
+    SnowForecastEntity toSnowForecastEntity(Snow snow);
+    CloudsForecastEntity toCloudsForecastEntity(Clouds clouds);
 }
+
 

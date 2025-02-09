@@ -19,7 +19,6 @@ public record WeatherDto (
 ) {
     @Builder
     public record WeatherStateDto(
-            int id,
             String name,
             String description,
             String iconId,
@@ -70,7 +69,6 @@ public record WeatherDto (
     ) {}
     @Builder
     public record LocationDto(
-            int id,
             String name,
             String countryCode,
             LocalDateTime sunriseTime,

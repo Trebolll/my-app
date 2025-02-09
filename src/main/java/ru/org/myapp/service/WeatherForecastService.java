@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.org.myapp.entity.forecast.WeatherForecastEntity;
-import ru.org.myapp.mapper.WeatherForecastMapper;
+import ru.org.myapp.mapper.IWeatherForecastMapper;
 import ru.org.myapp.repository.WeatherForecastEntityRepository;
 
 import java.util.List;
@@ -15,7 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WeatherForecastService {
     private final WeatherForecastEntityRepository weatherForecastEntityRepository;
+    private final IWeatherForecastMapper weatherForecastMapper;
     public List<WeatherForecastEntity> saveList(List<WeatherForecast> weatherForecast) {
-      return  weatherForecastEntityRepository.saveAllAndFlush(WeatherForecastMapper.LibToEntityList(weatherForecast));
+      return  weatherForecastEntityRepository.saveAllAndFlush(weatherForecastMapper.LibToEntityList(weatherForecast));
     }
 }
