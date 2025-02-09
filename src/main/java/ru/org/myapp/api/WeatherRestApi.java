@@ -20,7 +20,6 @@ public interface WeatherRestApi {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Успешный запрос"),
                     @ApiResponse(responseCode = "404", description = "Город не найден")})
-
     @GetMapping("/weather")
     ResponseEntity<WeatherDto> getWeather(
             @Parameter(description = "Название города", example = "Novosibirsk")
@@ -32,7 +31,6 @@ public interface WeatherRestApi {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Успешный запрос"),
                     @ApiResponse(responseCode = "404", description = "Город не найден")})
-
     @GetMapping("/forecast")
     ResponseEntity<List<WeatherForecastDto>> getForecast(
             @Parameter(description = "Название города", example = "Novosibirsk")

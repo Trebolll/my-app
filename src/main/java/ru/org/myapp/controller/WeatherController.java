@@ -1,9 +1,8 @@
 package ru.org.myapp.controller;
 
-import com.example.config.annotation.AuditExecution;
-import com.example.config.annotation.LogExecution;
+import com.example.config.annotation.Audit;
+import com.example.config.annotation.Log;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +18,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@Slf4j
 public class WeatherController implements WeatherRestApi {
-
     private final ServiceOpenWeatherApi serviceOpenWeatherApi;
-
-    @AuditExecution
-    @LogExecution
+    @Audit
+    @Log
     public ResponseEntity<WeatherDto> getWeather(String city) {
         return new ResponseEntity<>(serviceOpenWeatherApi.getWeather(city), HttpStatus.OK);
     }
-
-    @AuditExecution
-    @LogExecution
+    @Audit
+    @Log
     public ResponseEntity<List<WeatherForecastDto>> getForecast(@RequestParam String city) {
-        var sda = serviceOpenWeatherApi.getForecastInfo(city);
-        return new ResponseEntity<>(sda, HttpStatus.OK);
+        return new ResponseEntity<>(serviceOpenWeatherApi.getForecastInfo(city), HttpStatus.OK);
     }
 }
