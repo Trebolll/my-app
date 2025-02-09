@@ -6,6 +6,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .floating-forecast-button {
+            position: fixed;
+            left: 20px;
+            bottom: 80px; /* Подняли кнопку выше */
+            z-index: 1000;
+            display: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -48,22 +68,24 @@
     </div>
 </footer>
 
+<button id="forecast-button" class="btn btn-outline-primary floating-forecast-button">Forecast</button>
+
 <script>
     $(document).ready(function() {
         let forecastLoaded = false;
         let forecastVisible = false;
 
         $('#search-button').on('click', function() {
-            let city = $('#city-input').val();
+            var city = $('#city-input').val();
             if (city) {
                 clearPreviousResults();
                 fetchWeather(city);
             }
         });
 
-        $(document).on('click', '#forecast-button', function() {
-            let city = $('#city-input').val();
-            let forecastResults = $('#forecast-results');
+        $('#forecast-button').on('click', function() {
+            var city = $('#city-input').val();
+            var forecastResults = $('#forecast-results');
             if (forecastLoaded) {
                 if (forecastVisible) {
                     forecastResults.slideUp();
@@ -93,7 +115,7 @@
                 success: function(weather) {
                     console.log('Weather data received:', weather);
                     displayWeather(weather);
-                    $('#forecast-button').show();
+                    $('#forecast-button').fadeIn();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error retrieving weather data:', status, error);
@@ -122,8 +144,8 @@
         }
 
         function displayWeather(weather) {
-            let weatherHtml = `
-        <div class="card h-100 position-relative weather-card">
+            var weatherHtml = `
+        <div class="card h-100 position-relative weather-card fade-in">
             <div class="position-absolute weather-card-delete-form">
                 <button class="btn-close" aria-label="Delete"></button>
             </div>
@@ -146,16 +168,15 @@
                 <p class="card-text mb-1">Sunset: ${new Date(weather.locationDto.sunsetTime).toLocaleTimeString()}</p>
             </div>
         </div>
-        <button id="forecast-button" class="btn btn-outline-primary mt-3">Forecast</button>
         `;
-            $('#weather-results').html(weatherHtml).slideDown();
+            $('#weather-results').html(weatherHtml).show().addClass('fade-in');
             $('#search-form').slideUp();
         }
 
         function displayForecast(forecast) {
-            let forecastHtml = forecast.map(function(forecastItem) {
+            var forecastHtml = forecast.map(function(forecastItem) {
                 return `
-            <div class="card mb-3">
+            <div class="card mb-3 fade-in">
                 <div class="card-body">
                     <h5 class="card-title">${new Date(forecastItem.forecastTime).toLocaleString()}</h5>
                     <img src="${forecastItem.weatherState.weatherIconUrl}" alt="Weather icon" class="weather-icon">
@@ -171,14 +192,15 @@
             </div>
             `;
             }).join('');
-            $('#forecast-results').html(forecastHtml);
+            $('#forecast-results').html(forecastHtml).show().addClass('fade-in');
         }
 
         function clearPreviousResults() {
-            $('#weather-results').slideUp().empty();
-            $('#forecast-results').slideUp().empty();
+            $('#weather-results').hide().empty();
+            $('#forecast-results').hide().empty();
             forecastLoaded = false;
             forecastVisible = false;
+            $('#forecast-button').fadeOut();
         }
 
         function clearInput() {
@@ -186,5 +208,6 @@
         }
     });
 </script>
+
 </body>
 </html>
