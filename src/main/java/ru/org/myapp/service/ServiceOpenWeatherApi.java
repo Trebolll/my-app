@@ -24,15 +24,20 @@ public class ServiceOpenWeatherApi {
 
     public WeatherDto getWeather(String city) {
         try {
-            return weatherMapper.EntityToDto(
-                    weatherEntityService.saveEntity(
-                            client.currentWeather()
-                                    .single()
-                                    .byCityName(city)
-                                    .language(Language.RUSSIAN)
-                                    .unitSystem(UnitSystem.METRIC)
-                                    .retrieve()
-                                    .asJava()));
+            var weather = weatherEntityService.getWeatherByCity(city);
+            if (weather != null) {
+                return weatherMapper.EntityToDto(weather);
+            } else {
+                return weatherMapper.EntityToDto(
+                        weatherEntityService.saveEntity(
+                                client.currentWeather()
+                                        .single()
+                                        .byCityName(city)
+                                        .language(Language.RUSSIAN)
+                                        .unitSystem(UnitSystem.METRIC)
+                                        .retrieve()
+                                        .asJava()));
+            }
         } catch (Exception e) {
             throw new WeatherServiceException(e.getMessage());
         }
@@ -40,15 +45,20 @@ public class ServiceOpenWeatherApi {
 
     public List<WeatherForecastDto> getForecastInfo(String city) {
         try {
-            return weatherForecastMapper.EntityToDtoList(
-                    weatherForecastService.saveList(
-                            client.forecast5Day3HourStep()
-                                    .byCityName(city)
-                                    .language(Language.RUSSIAN)
-                                    .unitSystem(UnitSystem.METRIC)
-                                    .retrieve()
-                                    .asJava()
-                                    .getWeatherForecasts()));
+            var forecast = weatherForecastService.findAll(city);
+            if (!forecast.isEmpty()) {
+                return weatherForecastMapper.EntityToDtoList(forecast);
+            } else {
+                return weatherForecastMapper.EntityToDtoList(
+                        weatherForecastService.saveList(
+                                client.forecast5Day3HourStep()
+                                        .byCityName(city)
+                                        .language(Language.RUSSIAN)
+                                        .unitSystem(UnitSystem.METRIC)
+                                        .retrieve()
+                                        .asJava()
+                                        .getWeatherForecasts(), city));
+            }
         } catch (Exception e) {
             throw new WeatherServiceException(e.getMessage());
         }

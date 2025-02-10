@@ -16,7 +16,10 @@ import java.util.List;
 public class WeatherForecastService {
     private final WeatherForecastEntityRepository weatherForecastEntityRepository;
     private final IWeatherForecastMapper weatherForecastMapper;
-    public List<WeatherForecastEntity> saveList(List<WeatherForecast> weatherForecast) {
-      return  weatherForecastEntityRepository.saveAllAndFlush(weatherForecastMapper.LibToEntityList(weatherForecast));
+    public List<WeatherForecastEntity> saveList(List<WeatherForecast> weatherForecast,  String city) {
+      return  weatherForecastEntityRepository.saveAllAndFlush(weatherForecastMapper.LibToEntityList(weatherForecast, city));
+    }
+    public List<WeatherForecastEntity> findAll(String city) {
+        return weatherForecastEntityRepository.findAllByCity(city);
     }
 }

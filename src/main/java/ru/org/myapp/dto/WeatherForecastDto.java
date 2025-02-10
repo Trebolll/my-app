@@ -15,7 +15,8 @@ public record WeatherForecastDto(
         SnowDto snow,
         CloudsDto clouds,
         LocalDateTime forecastTimeISO,
-        String dayTime
+        String dayTime,
+        String city
 ) {
     @Builder
     public record WeatherStateDto(

@@ -26,6 +26,7 @@ import ru.org.myapp.entity.forecast.WeatherStateForecastEntity;
 import ru.org.myapp.entity.forecast.WindForecastEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface IWeatherForecastMapper {
@@ -54,17 +55,25 @@ public interface IWeatherForecastMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "forecastTimeISO", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "dayTime", source = "dayTime")
-    @Mapping(source = "weatherState", target = "weatherStateForecastEntity", qualifiedByName = "mapWeatherStateForecast")
-    @Mapping(source = "temperature", target = "temperatureForecastEntity")
-    @Mapping(source = "atmosphericPressure", target = "atmosphericPressureForecastEntity")
-    @Mapping(source = "humidity", target = "humidityForecastEntity", qualifiedByName = "mapHumidity")
-    @Mapping(source = "wind", target = "windForecastEntity")
-    @Mapping(source = "rain", target = "rainForecastEntity")
-    @Mapping(source = "snow", target = "snowForecastEntity")
-    @Mapping(source = "clouds", target = "cloudsForecastEntity")
-    WeatherForecastEntity LibToEntity(WeatherForecast forecast);
-    List<WeatherForecastEntity> LibToEntityList(List<WeatherForecast> forecasts);
+    @Mapping(target = "dayTime", source = "forecast.dayTime")
+    @Mapping(target = "weatherStateForecastEntity", source = "forecast.weatherState", qualifiedByName = "mapWeatherStateForecast")
+    @Mapping(target = "temperatureForecastEntity", source = "forecast.temperature")
+    @Mapping(target = "atmosphericPressureForecastEntity", source = "forecast.atmosphericPressure")
+    @Mapping(target = "humidityForecastEntity", source = "forecast.humidity", qualifiedByName = "mapHumidity")
+    @Mapping(target = "windForecastEntity", source = "forecast.wind")
+    @Mapping(target = "rainForecastEntity", source = "forecast.rain")
+    @Mapping(target = "snowForecastEntity", source = "forecast.snow")
+    @Mapping(target = "cloudsForecastEntity", source = "forecast.clouds")
+    @Mapping(target = "city", source = "city")
+    WeatherForecastEntity LibToEntity(WeatherForecast forecast, String city);
+    default List<WeatherForecastEntity> LibToEntityList(List<WeatherForecast> forecasts, String city) {
+        if (forecasts == null) {
+            return List.of();
+        }
+        return forecasts.stream()
+                .map(forecast -> LibToEntity(forecast, city))
+                .collect(Collectors.toList());
+    }
 
     @Named("mapWeatherStateForecast")
     @Mapping(target = "id", ignore = true)

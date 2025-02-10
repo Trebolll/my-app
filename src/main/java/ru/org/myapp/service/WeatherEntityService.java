@@ -17,4 +17,8 @@ public class WeatherEntityService {
     public WeatherEntity saveEntity(Weather weather) {
         return weatherEntityRepository.saveAndFlush(weatherMapper.LibToEntity(weather));
     }
+    @Transactional(readOnly = true)
+    public WeatherEntity getWeatherByCity(String city) {
+        return weatherEntityRepository.findByCity(city);
+    }
 }

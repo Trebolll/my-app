@@ -13,6 +13,9 @@
             <column name="forecast_time" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
             <column name="forecast_time_iso" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>

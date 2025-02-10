@@ -56,4 +56,6 @@ public class WeatherForecastEntity {
     private  LocalDateTime forecastTimeISO;
     @Column(name = "day_time")
     private String dayTime;
+    @Column(name = "city")
+    private String city;
 }
