@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.dto.WeatherForecastDto;
@@ -13,6 +14,7 @@ import ru.org.myapp.dto.WeatherForecastDto;
 import java.util.List;
 
 @Tag(name = "Weather API", description = "API для работы с погодой")
+@RequestMapping("/api/v1")
 public interface WeatherRestApi {
     @Operation(
             summary = "Получить текущую погоду",
