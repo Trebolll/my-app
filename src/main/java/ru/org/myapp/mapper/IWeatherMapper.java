@@ -27,7 +27,7 @@ public interface IWeatherMapper {
     @Mapping(target = "cloudsDto", source = "clouds")
     @Mapping(target = "locationDto", source = "location")
     @Mapping(target = "weatherStateDto", source = "weatherStateEntity")
-    WeatherDto EntityToDto(WeatherEntity weatherEntity);
+    WeatherDto entityToDto(WeatherEntity weatherEntity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "calculationTime", source = "calculationTime")
@@ -40,7 +40,7 @@ public interface IWeatherMapper {
     @Mapping(target = "clouds", source = "clouds")
     @Mapping(target = "location", source = "location", qualifiedByName = "mapLocation")
     @Mapping(target = "weatherStateEntity", source = "weatherState", qualifiedByName = "mapWeatherState")
-    WeatherEntity LibToEntity(Weather weather);
+    WeatherEntity libToEntity(Weather weather);
 
     @Named("mapWeatherState")
     @Mapping(target = "id", ignore = true)

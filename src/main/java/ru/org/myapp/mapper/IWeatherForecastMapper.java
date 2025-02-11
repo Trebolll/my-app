@@ -38,7 +38,7 @@ public interface IWeatherForecastMapper {
     WeatherForecastDto.RainDto toRainDto(RainForecastEntity entity);
     WeatherForecastDto.SnowDto toSnowDto(SnowForecastEntity entity);
     WeatherForecastDto.CloudsDto toCloudsDto(CloudsForecastEntity entity);
-    List<WeatherForecastDto> EntityToDtoList(List<WeatherForecastEntity> entities);
+    List<WeatherForecastDto> entityToDtoList(List<WeatherForecastEntity> entities);
 
     @Mapping(source = "weatherStateForecastEntity", target = "weatherState")
     @Mapping(source = "temperatureForecastEntity", target = "temperature")
@@ -51,7 +51,7 @@ public interface IWeatherForecastMapper {
     @Mapping(source = "forecastTime", target = "forecastTime")
     @Mapping(source = "forecastTimeISO", target = "forecastTimeISO")
     @Mapping(source = "dayTime", target = "dayTime")
-    WeatherForecastDto EntityToDto(WeatherForecastEntity entity);
+    WeatherForecastDto entityToDto(WeatherForecastEntity entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "forecastTimeISO", expression = "java(java.time.LocalDateTime.now())")
@@ -65,13 +65,13 @@ public interface IWeatherForecastMapper {
     @Mapping(target = "snowForecastEntity", source = "forecast.snow")
     @Mapping(target = "cloudsForecastEntity", source = "forecast.clouds")
     @Mapping(target = "city", source = "city")
-    WeatherForecastEntity LibToEntity(WeatherForecast forecast, String city);
-    default List<WeatherForecastEntity> LibToEntityList(List<WeatherForecast> forecasts, String city) {
+    WeatherForecastEntity libToEntity(WeatherForecast forecast, String city);
+    default List<WeatherForecastEntity> libToEntityList(List<WeatherForecast> forecasts, String city) {
         if (forecasts == null) {
             return List.of();
         }
         return forecasts.stream()
-                .map(forecast -> LibToEntity(forecast, city))
+                .map(forecast -> libToEntity(forecast, city))
                 .collect(Collectors.toList());
     }
 

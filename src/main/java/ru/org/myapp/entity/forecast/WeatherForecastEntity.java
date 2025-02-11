@@ -1,14 +1,6 @@
 package ru.org.myapp.entity.forecast;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +14,17 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "weather_forecast_entity")
+@NamedEntityGraph(name = "forecast",
+        attributeNodes = {
+                @NamedAttributeNode("weatherStateForecastEntity"),
+                @NamedAttributeNode("temperatureForecastEntity"),
+                @NamedAttributeNode("atmosphericPressureForecastEntity"),
+                @NamedAttributeNode("humidityForecastEntity"),
+                @NamedAttributeNode("windForecastEntity"),
+                @NamedAttributeNode("rainForecastEntity"),
+                @NamedAttributeNode("snowForecastEntity"),
+                @NamedAttributeNode("cloudsForecastEntity"),
+})
 public class WeatherForecastEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
