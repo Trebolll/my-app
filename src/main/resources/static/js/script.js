@@ -3,7 +3,7 @@ $(document).ready(function() {
     let forecastVisible = false;
 
     $('#search-button').on('click', function() {
-        var city = $('#city-input').val();
+        let city = $('#city-input').val();
         if (city) {
             clearPreviousResults();
             fetchWeather(city);
@@ -11,8 +11,8 @@ $(document).ready(function() {
     });
 
     $('#forecast-button').on('click', function() {
-        var city = $('#city-input').val();
-        var forecastResults = $('#forecast-results');
+        let city = $('#city-input').val();
+        let forecastResults = $('#forecast-results');
         if (forecastLoaded) {
             if (forecastVisible) {
                 forecastResults.slideUp();
@@ -71,7 +71,7 @@ $(document).ready(function() {
     }
 
     function displayWeather(weather) {
-        var weatherHtml = `
+        let weatherHtml = `
             <div class="card h-100 position-relative weather-card fade-in">
                 <div class="position-absolute weather-card-delete-form">
                     <button class="btn-close" aria-label="Delete"></button>
@@ -101,7 +101,7 @@ $(document).ready(function() {
     }
 
     function displayForecast(forecast) {
-        var forecastHtml = forecast.map(function(forecastItem) {
+        let forecastHtml = forecast.map(function(forecastItem) {
             return `
                 <div class="card mb-3 fade-in">
                     <div class="card-body">
