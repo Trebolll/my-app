@@ -3,7 +3,6 @@ import org.springframework.data.jpa.repository.JpaRepository;;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.org.myapp.entity.forecast.WeatherForecastEntity;
-import ru.org.myapp.entity.weather.WeatherEntity;
 
 import java.util.List;
 
