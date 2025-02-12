@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.dto.WeatherForecastDto;
-import ru.org.myapp.entity.weather.WeatherEntity;
 import ru.org.myapp.exception.WeatherServiceException;
 import ru.org.myapp.mapper.IWeatherForecastMapper;
 import ru.org.myapp.mapper.IWeatherMapper;
@@ -25,6 +24,7 @@ public class ServiceOpenWeatherApi {
     private final IWeatherMapper weatherMapper;
     private final IWeatherForecastMapper weatherForecastMapper;
 
+    @Cacheable(value = "weather", key = "#city")
     public WeatherDto getWeather(String city) {
         try {
             return Optional.ofNullable(weatherEntityService.getWeatherByCity(city))
@@ -43,6 +43,7 @@ public class ServiceOpenWeatherApi {
             throw new WeatherServiceException(e.getMessage());
         }
     }
+
     @Cacheable(value = "forecast", key = "#city")
     public List<WeatherForecastDto> getForecastInfo(String city) {
         try {
