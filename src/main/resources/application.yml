@@ -32,5 +32,9 @@ spring:
 open.weather:
   sdk:
     key: 7e37c875a0722eb2f61a58b26135b98d
-
+logging:
+  level:
+    org:
+      springframework: info
+      springdoc: info
 

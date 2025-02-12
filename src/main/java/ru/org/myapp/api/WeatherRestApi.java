@@ -25,7 +25,7 @@ public interface WeatherRestApi {
     @GetMapping("/weather")
     ResponseEntity<WeatherDto> getWeather(
             @Parameter(description = "Название города", example = "Novosibirsk")
-            @RequestParam(required = false, value = "city") String city);
+            @RequestParam(required = true, value = "city") String city);
 
     @Operation(
             summary = "Получить прогноз погоды",
@@ -36,6 +36,6 @@ public interface WeatherRestApi {
     @GetMapping("/forecast")
     ResponseEntity<List<WeatherForecastDto>> getForecast(
             @Parameter(description = "Название города", example = "Novosibirsk")
-            @RequestParam(required = false, value = "city") String city);
+            @RequestParam(required = true, value = "city") String city);
 }
 
