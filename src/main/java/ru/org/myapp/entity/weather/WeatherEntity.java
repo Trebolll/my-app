@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,7 +35,13 @@ import java.time.LocalDateTime;
                 @NamedAttributeNode("rainEntity"),
                 @NamedAttributeNode("snowEntity"),
                 @NamedAttributeNode("clouds"),
-                @NamedAttributeNode("location"),
+                @NamedAttributeNode(value = "location", subgraph = "location-subgraph")
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "location-subgraph",
+                        attributeNodes = {
+                                @NamedAttributeNode("coordinate")
+                        })
         })
 public class WeatherEntity {
     @Id
