@@ -9,6 +9,6 @@ import ru.org.myapp.entity.weather.WeatherEntity;
 @Repository
 public interface WeatherEntityRepository extends JpaRepository<WeatherEntity, Long> {
     @EntityGraph(value = "weather", type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT w FROM WeatherEntity w WHERE w.location.name = :city")
+    @Query("SELECT w FROM WeatherEntity w WHERE w.location.name = :city ORDER BY w.calculationTime DESC")
     WeatherEntity findByCity(String city);
 }

@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface WeatherForecastEntityRepository extends JpaRepository<WeatherForecastEntity, Long> {
     @EntityGraph(value = "forecast", type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT w FROM WeatherForecastEntity w WHERE w.city = :city")
+    @Query("SELECT w FROM WeatherForecastEntity w WHERE w.city = :city ORDER BY w.forecastTime DESC")
     List<WeatherForecastEntity> findAllByCity(String city);
 }
