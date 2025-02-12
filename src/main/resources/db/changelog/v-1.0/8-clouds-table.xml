@@ -5,24 +5,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="v-1.0.2" author="mark_morev">
-        <createTable tableName="weather_state_entity">
+    <changeSet id="v-1.0.7" author="mark_morev">
+        <createTable tableName="clouds_entity">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(255)">
+            <column name="value" type="tinyint">
                 <constraints nullable="true"/>
             </column>
-            <column name="description" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="icon_id" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="weather_condition_enum" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="weather_icon_url" type="VARCHAR(255)">
+            <column name="unit" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
         </createTable>

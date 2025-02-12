@@ -5,18 +5,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="v-1.0.4" author="mark_morev">
-        <createTable tableName="atmospheric_pressure_entity">
+    <changeSet id="v-1.0.6" author="mark_morev">
+        <createTable tableName="snow_entity">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="value" type="DOUBLE">
+            <column name="one_hour_level" type="DOUBLE">
                 <constraints nullable="true"/>
             </column>
-            <column name="sea_level_value" type="DOUBLE">
-                <constraints nullable="true"/>
-            </column>
-            <column name="ground_level_value" type="DOUBLE">
+            <column name="three_hour_level" type="DOUBLE">
                 <constraints nullable="true"/>
             </column>
             <column name="unit" type="VARCHAR(255)">
