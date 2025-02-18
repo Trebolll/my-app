@@ -16,6 +16,7 @@ public class WeatherForecastService {
     public List<WeatherForecastEntity> saveList(List<WeatherForecastEntity> weatherForecast) {
       return  weatherForecastEntityRepository.saveAllAndFlush(weatherForecast);
     }
+    @Transactional(readOnly = true)
     public List<WeatherForecastEntity> findAll(String city) {
         return weatherForecastEntityRepository.findAllByCity(city);
     }

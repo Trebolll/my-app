@@ -8,10 +8,10 @@ section#page-content {
 
 .weather-card, .forecast-card {
     margin-bottom: 20px;
-    width: 100%; /* Устанавливаем ширину карточки на весь экран */
-    max-width: 600px; /* Устанавливаем максимальную ширину карточки */
-    margin: 0 auto; /* Центрируем карточку */
-    border: 1px solid #ddd; /* Уменьшаем толщину рамки */
+    width: 25%;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 3px solid #ddd;
 }
 
 .weather-card .weather-card-delete-form {
