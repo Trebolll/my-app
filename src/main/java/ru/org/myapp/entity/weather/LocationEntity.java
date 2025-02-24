@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -25,8 +26,9 @@ import java.time.ZoneOffset;
 @Table(name = "location_entity")
 public class LocationEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "uuid")
+    private UUID uuid;
     @Column(name = "name")
     private String name;
     @Column(name = "country_code")
@@ -38,6 +40,6 @@ public class LocationEntity {
     @Column(name = "zone_offset")
     private ZoneOffset zoneOffset;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "coordinate_entity_id", referencedColumnName = "id")
+    @JoinColumn(name = "coordinate_entity_uuid", referencedColumnName = "uuid")
     private CoordinateEntity coordinate;
 }

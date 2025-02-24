@@ -7,7 +7,7 @@
 
     <changeSet id="v-1.0.8" author="mark_morev">
         <createTable tableName="coordinate_entity">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="uuid" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="latitude" type="DOUBLE">

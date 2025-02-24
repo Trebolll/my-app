@@ -7,7 +7,7 @@
 
     <changeSet id="v-1.0.7" author="mark_morev">
         <createTable tableName="snow_forecast_entity">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="uuid" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="one_hour_level" type="DOUBLE">

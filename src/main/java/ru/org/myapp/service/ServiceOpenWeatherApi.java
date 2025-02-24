@@ -39,7 +39,7 @@ public class ServiceOpenWeatherApi {
                                                     .unitSystem(UnitSystem.METRIC)
                                                     .retrieve()
                                                     .asJava()))));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             throw new WeatherServiceException(e.getMessage());
         }
     }
@@ -60,7 +60,7 @@ public class ServiceOpenWeatherApi {
                                                     .retrieve()
                                                     .asJava()
                                                     .getWeatherForecasts(), city))));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             throw new WeatherServiceException(e.getMessage());
         }
     }

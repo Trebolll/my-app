@@ -7,7 +7,7 @@
 
     <changeSet id="v-1.0.2" author="mark_morev">
         <createTable tableName="atmospheric_pressure_entity">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="uuid" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="value" type="DOUBLE">

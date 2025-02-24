@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +22,9 @@ import lombok.NoArgsConstructor;
 public class SnowEntity {
     private static final String DEFAULT_UNIT = "mm";
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "uuid")
+    private UUID uuid;
     @Column(name = "three_hour_level")
     private Double threeHourLevel;
     @Column(name = "one_hour_level")

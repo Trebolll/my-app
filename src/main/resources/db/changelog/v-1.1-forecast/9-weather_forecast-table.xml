@@ -7,7 +7,7 @@
 
     <changeSet id="v-1.0.9" author="mark_morev">
         <createTable tableName="weather_forecast_entity">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="uuid" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="forecast_time" type="TIMESTAMP">
@@ -22,79 +22,79 @@
             <column name="day_time" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="weather_state_forecast_entity_id" type="BIGINT">
+            <column name="weather_state_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="temperature_forecast_entity_id" type="BIGINT">
+            <column name="temperature_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="atmospheric_pressure_forecast_entity_id" type="BIGINT">
+            <column name="atmospheric_pressure_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="humidity_forecast_entity_id" type="BIGINT">
+            <column name="humidity_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="wind_forecast_entity_id" type="BIGINT">
+            <column name="wind_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="rain_forecast_entity_id" type="BIGINT">
+            <column name="rain_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="snow_forecast_entity_id" type="BIGINT">
+            <column name="snow_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
-            <column name="clouds_forecast_entity_id" type="BIGINT">
+            <column name="clouds_forecast_entity_uuid" type="UUID">
                 <constraints nullable="true"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="weather_state_forecast_entity_id"
+                                 baseColumnNames="weather_state_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_weather_state_forecast"
-                                 referencedTableName="weather_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedTableName="weather_state_forecast_entity"
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="temperature_forecast_entity_id"
+                                 baseColumnNames="temperature_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_temperature_forecast"
                                  referencedTableName="temperature_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="atmospheric_pressure_forecast_entity_id"
+                                 baseColumnNames="atmospheric_pressure_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_pressure_forecast"
                                  referencedTableName="atmospheric_pressure_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="humidity_forecast_entity_id"
+                                 baseColumnNames="humidity_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_humidity_forecast"
                                  referencedTableName="humidity_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="wind_forecast_entity_id"
+                                 baseColumnNames="wind_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_wind_forecast"
-                                 referencedTableName="weather_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedTableName="wind_forecast_entity"
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="rain_forecast_entity_id"
+                                 baseColumnNames="rain_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_rain_forecast"
                                  referencedTableName="rain_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="snow_forecast_entity_id"
+                                 baseColumnNames="snow_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_snow_forecast"
                                  referencedTableName="snow_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="uuid"/>
 
         <addForeignKeyConstraint baseTableName="weather_forecast_entity"
-                                 baseColumnNames="clouds_forecast_entity_id"
+                                 baseColumnNames="clouds_forecast_entity_uuid"
                                  constraintName="fk_weather_forecast_clouds_forecast"
                                  referencedTableName="clouds_forecast_entity"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="uuid"/>
     </changeSet>
 
 </databaseChangeLog>

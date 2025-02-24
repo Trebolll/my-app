@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +21,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "atmospheric_pressure_entity")
 public  class AtmosphericPressureEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "uuid")
+    private UUID uuid;
     @Column(name = "value")
     private Double value;
     @Column(name = "sea_level_value")

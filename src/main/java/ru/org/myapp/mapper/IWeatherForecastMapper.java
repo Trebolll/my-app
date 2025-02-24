@@ -53,7 +53,7 @@ public interface IWeatherForecastMapper {
     @Mapping(source = "dayTime", target = "dayTime")
     WeatherForecastDto entityToDto(WeatherForecastEntity entity);
 
-    @Mapping(target = "id", ignore = true)
+
     @Mapping(target = "forecastTimeISO", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "dayTime", source = "forecast.dayTime")
     @Mapping(target = "weatherStateForecastEntity", source = "forecast.weatherState", qualifiedByName = "mapWeatherStateForecast")
@@ -76,7 +76,6 @@ public interface IWeatherForecastMapper {
     }
 
     @Named("mapWeatherStateForecast")
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "name")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "iconId", source = "iconId")
@@ -87,7 +86,6 @@ public interface IWeatherForecastMapper {
     AtmosphericPressureForecastEntity toAtmosphericPressureForecastEntity(AtmosphericPressure atmosphericPressure);
 
     @Named("mapHumidity")
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "value", source = "value")
     @Mapping(target = "unit", source = "unit")
     HumidityForecastEntity mapHumidity(Humidity humidity);

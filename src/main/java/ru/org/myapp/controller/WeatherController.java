@@ -21,7 +21,7 @@ public class WeatherController implements WeatherRestApi {
     @Audit
     @Log
     @Override
-    public ResponseEntity<WeatherDto> getWeather(String city) {
+    public ResponseEntity<WeatherDto> getWeather(@RequestParam String city) {
         return new ResponseEntity<>(serviceOpenWeatherApi.getWeather(city), HttpStatus.OK);
     }
     @Audit

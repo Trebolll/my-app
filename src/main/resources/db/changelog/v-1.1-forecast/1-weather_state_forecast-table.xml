@@ -7,7 +7,7 @@
 
     <changeSet id="v-1.0.0" author="mark_morev">
         <createTable tableName="weather_state_forecast_entity">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="uuid" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)">
