@@ -8,13 +8,13 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.dto.WeatherForecastDto;
+import ru.org.myapp.entity.forecast.WeatherForecastEntity;
+import ru.org.myapp.entity.weather.WeatherEntity;
 import ru.org.myapp.exception.WeatherServiceException;
-import ru.org.myapp.mapper.IWeatherForecastMapper;
-import ru.org.myapp.mapper.IWeatherMapper;
+import ru.org.myapp.mapper.WeatherForecastMapper;
+import ru.org.myapp.mapper.WeatherMapper;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 import static ru.org.myapp.util.Const.forecast;
 import static ru.org.myapp.util.Const.weather;
@@ -25,24 +25,27 @@ public class ServiceOpenWeatherApi {
     private final OpenWeatherMapClient client;
     private final WeatherEntityService weatherEntityService;
     private final WeatherForecastService weatherForecastService;
-    private final IWeatherMapper weatherMapper;
-    private final IWeatherForecastMapper weatherForecastMapper;
+    private final WeatherForecastMapper weatherForecastMapper;
+    private final WeatherMapper weatherMapper;
 
     @Cacheable(value = weather, key = "#city")
     public WeatherDto getWeather(String city) {
         try {
-            return Optional.of(weatherEntityService.getWeatherByCity(city))
-                    .map(weatherMapper::entityToDto)
-                    .orElseGet(() -> weatherMapper.entityToDto(
-                            weatherEntityService.saveEntity(
-                                    Objects.requireNonNull(weatherMapper.libToEntity(
-                                            client.currentWeather()
-                                                    .single()
-                                                    .byCityName(city)
-                                                    .language(Language.ENGLISH)
-                                                    .unitSystem(UnitSystem.METRIC)
-                                                    .retrieve()
-                                                    .asJava())))));
+            WeatherEntity weatherEntity = weatherEntityService.getWeatherByCity(city);
+            if (weatherEntity != null) {
+                return weatherMapper.entityToDto(weatherEntity);
+            } else {
+                return weatherMapper.entityToDto(
+                        weatherEntityService.saveEntity(
+                                weatherMapper.libToEntity(
+                                        client.currentWeather()
+                                                .single()
+                                                .byCityName(city)
+                                                .language(Language.ENGLISH)
+                                                .unitSystem(UnitSystem.METRIC)
+                                                .retrieve()
+                                                .asJava())));
+            }
         } catch (RuntimeException e) {
             throw new WeatherServiceException(e.getMessage());
         }
@@ -51,19 +54,21 @@ public class ServiceOpenWeatherApi {
     @Cacheable(value = forecast, key = "#city")
     public List<WeatherForecastDto> getForecastInfo(String city) {
         try {
-            return Optional.of(weatherForecastService.findAll(city))
-                    .filter(forecast -> !forecast.isEmpty())
-                    .map(weatherForecastMapper::entityToDtoList)
-                    .orElseGet(() -> weatherForecastMapper.entityToDtoList(
-                            weatherForecastService.saveList(
-                                    weatherForecastMapper.libToEntityList(
-                                            client.forecast5Day3HourStep()
-                                                    .byCityName(city)
-                                                    .language(Language.ENGLISH)
-                                                    .unitSystem(UnitSystem.METRIC)
-                                                    .retrieve()
-                                                    .asJava()
-                                                    .getWeatherForecasts(), city))));
+            List<WeatherForecastEntity> forecastEntities = weatherForecastService.findAll(city);
+            if (!forecastEntities.isEmpty()) {
+                return weatherForecastMapper.entityToDtoList(forecastEntities);
+            } else {
+                return weatherForecastMapper.entityToDtoList(
+                        weatherForecastService.saveList(
+                                weatherForecastMapper.libToEntityList(
+                                        client.forecast5Day3HourStep()
+                                                .byCityName(city)
+                                                .language(Language.ENGLISH)
+                                                .unitSystem(UnitSystem.METRIC)
+                                                .retrieve()
+                                                .asJava()
+                                                .getWeatherForecasts(), city)));
+            }
         } catch (RuntimeException e) {
             throw new WeatherServiceException(e.getMessage());
         }

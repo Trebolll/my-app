@@ -12,7 +12,7 @@ import ru.org.myapp.dto.WeatherDto;
 import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.entity.common.Response;
 
-import ru.org.myapp.entity.common.StatusCode;
+import ru.org.myapp.entity.common.ResponseStatus;
 import ru.org.myapp.exception.WeatherServiceException;
 import ru.org.myapp.service.ServiceOpenWeatherApi;
 
@@ -28,17 +28,17 @@ public class WeatherController implements WeatherRestApi {
     @Override
     public ResponseEntity<Response<WeatherDto>> getWeather(@RequestParam String city) {
         try {
-            return new ResponseEntity<>(new Response<>(new StatusCode(
-                    HttpStatus.OK.value(),
-                    HttpStatus.OK.getReasonPhrase()), "Успешный запрос",
-                    serviceOpenWeatherApi.getWeather(city)), HttpStatus.OK);
-
+            return ResponseEntity.ok(Response.<WeatherDto>builder().status(ResponseStatus.builder()
+                                    .code(HttpStatus.OK.value())
+                                    .description("Успешный запрос")
+                                    .build()).data(serviceOpenWeatherApi.getWeather(city)).build());
         } catch (WeatherServiceException e) {
-            return new ResponseEntity<>(new Response<>(new StatusCode(
-                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()),
-                    "Ошибка сервера: " + e.getMessage(),
-                    null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.<WeatherDto>builder()
+                            .status(ResponseStatus.builder()
+                                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                    .description("Ошибка сервера: " + e.getMessage())
+                                    .build()).data(null).build());
         }
     }
     @Audit
@@ -46,18 +46,18 @@ public class WeatherController implements WeatherRestApi {
     @Override
     public ResponseEntity<Response<List<WeatherForecastDto>>> getForecast(@RequestParam String city) {
         try {
-            return new ResponseEntity<>(new Response<>(new StatusCode(
-                            HttpStatus.OK.value(),
-                            HttpStatus.OK.getReasonPhrase()),
-                    "Успешный запрос",
-                    serviceOpenWeatherApi.getForecastInfo(city)), HttpStatus.OK);
-
+            return ResponseEntity.ok(Response.<List<WeatherForecastDto>>builder().status(ResponseStatus.builder()
+                                    .code(HttpStatus.OK.value())
+                                    .description("Успешный запрос")
+                                    .build())
+                            .data(serviceOpenWeatherApi.getForecastInfo(city)).build());
         } catch (WeatherServiceException e) {
-            return new ResponseEntity<>(new Response<>(new StatusCode(
-                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()),
-                    "Ошибка сервера: " + e.getMessage(),
-                    null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.<List<WeatherForecastDto>>builder()
+                            .status(ResponseStatus.builder()
+                                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                                    .description("Ошибка сервера: " + e.getMessage())
+                                    .build()).data(null).build());
         }
     }
 }
