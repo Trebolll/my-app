@@ -8,9 +8,11 @@ import ru.org.myapp.entity.forecast.WeatherForecastEntity;
 
 import java.util.List;
 
+import static ru.org.myapp.util.Const.forecast;
+
 @Repository
 public interface WeatherForecastEntityRepository extends JpaRepository<WeatherForecastEntity, Long> {
-    @EntityGraph(value = "forecast", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(value = forecast, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT w FROM WeatherForecastEntity w " +
             "WHERE w.city = :city " +
             "AND w.forecastTime >= CAST(date(now()) AS timestamp)" +

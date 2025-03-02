@@ -1,22 +1,21 @@
-package ru.org.myapp.mapper;
+package ru.org.myapp.mapper
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.weather.Location;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.Named;
-import ru.org.myapp.dto.WeatherDto;
-import ru.org.myapp.entity.weather.CoordinateEntity;
-import ru.org.myapp.entity.weather.LocationEntity;
-import ru.org.myapp.entity.weather.WeatherEntity;
-import ru.org.myapp.entity.weather.WeatherStateEntity;
+import com.github.prominence.openweathermap.api.model.Coordinate
+import com.github.prominence.openweathermap.api.model.WeatherState
+import com.github.prominence.openweathermap.api.model.weather.Location
+import com.github.prominence.openweathermap.api.model.weather.Weather
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.MappingConstants
+import org.mapstruct.Named
+import ru.org.myapp.dto.WeatherDto
+import ru.org.myapp.entity.weather.CoordinateEntity
+import ru.org.myapp.entity.weather.LocationEntity
+import ru.org.myapp.entity.weather.WeatherEntity
+import ru.org.myapp.entity.weather.WeatherStateEntity
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface IWeatherMapper {
-
+interface IWeatherMapper {
     @Mapping(target = "calculationTimeDto", source = "calculationTime")
     @Mapping(target = "temperatureDto", source = "temperatureEntity")
     @Mapping(target = "atmosphericPressureDto", source = "atmosphericPressureEntity")
@@ -27,7 +26,7 @@ public interface IWeatherMapper {
     @Mapping(target = "cloudsDto", source = "clouds")
     @Mapping(target = "locationDto", source = "location")
     @Mapping(target = "weatherStateDto", source = "weatherStateEntity")
-    WeatherDto entityToDto(WeatherEntity weatherEntity);
+    fun entityToDto(weatherEntity: WeatherEntity?): WeatherDto?
 
     @Mapping(target = "calculationTime", source = "calculationTime")
     @Mapping(target = "temperatureEntity", source = "temperature")
@@ -37,9 +36,9 @@ public interface IWeatherMapper {
     @Mapping(target = "rainEntity", source = "rain")
     @Mapping(target = "snowEntity", source = "snow")
     @Mapping(target = "clouds", source = "clouds")
-    @Mapping(target = "location", source = "location", qualifiedByName = "mapLocation")
-    @Mapping(target = "weatherStateEntity", source = "weatherState", qualifiedByName = "mapWeatherState")
-    WeatherEntity libToEntity(Weather weather);
+    @Mapping(target = "location", source = "location", qualifiedByName = ["mapLocation"])
+    @Mapping(target = "weatherStateEntity", source = "weatherState", qualifiedByName = ["mapWeatherState"])
+    fun libToEntity(weather: Weather?): WeatherEntity?
 
     @Named("mapWeatherState")
     @Mapping(target = "name", source = "name")
@@ -47,12 +46,12 @@ public interface IWeatherMapper {
     @Mapping(target = "iconId", source = "iconId")
     @Mapping(target = "weatherConditionEnum", source = "weatherConditionEnum")
     @Mapping(target = "weatherIconUrl", source = "weatherIconUrl")
-    WeatherStateEntity mapWeatherState(WeatherState weatherState);
+    fun mapWeatherState(weatherState: WeatherState?): WeatherStateEntity?
 
     @Named("mapLocation")
-    @Mapping(target = "coordinate", source = "coordinate", qualifiedByName = "mapCoordinate")
-    LocationEntity mapLocation(Location location);
+    @Mapping(target = "coordinate", source = "coordinate", qualifiedByName = ["mapCoordinate"])
+    fun mapLocation(location: Location?): LocationEntity?
 
     @Named("mapCoordinate")
-    CoordinateEntity mapCoordinate(Coordinate coordinate);
+    fun mapCoordinate(coordinate: Coordinate?): CoordinateEntity?
 }

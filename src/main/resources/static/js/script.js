@@ -39,14 +39,14 @@ $(document).ready(function() {
             url: '/api/v1/weather',
             method: 'GET',
             data: { city: city },
-            success: function(weather) {
-                console.log('Weather data received:', weather);
-                displayWeather(weather);
+            success: function(response) { // response теперь содержит ApiResponse
+                console.log('Weather data received:', response);
+                displayWeather(response.data); // Передаем response.data
                 $('#forecast-button').fadeIn();
             },
             error: function(xhr, status, error) {
                 console.error('Error retrieving weather data:', status, error);
-                alert('Error retrieving weather data');
+                alert('Error retrieving weather data: ' + xhr.responseJSON?.message);
             }
         });
     }
@@ -56,46 +56,46 @@ $(document).ready(function() {
             url: '/api/v1/forecast',
             method: 'GET',
             data: { city: city },
-            success: function(forecast) {
-                console.log('Forecast data received:', forecast);
-                displayForecast(forecast);
+            success: function(response) {
+                console.log('Forecast data received:', response);
+                displayForecast(response.data);
                 $('#forecast-results').slideDown();
                 forecastLoaded = true;
                 forecastVisible = true;
             },
             error: function(xhr, status, error) {
                 console.error('Error retrieving forecast data:', status, error);
-                alert('Error retrieving forecast data');
+                alert('Error retrieving forecast data: ' + xhr.responseJSON?.message);
             }
         });
     }
 
     function displayWeather(weather) {
         let weatherHtml = `
-            <div class="card h-100 position-relative weather-card fade-in">
-                <div class="position-absolute weather-card-delete-form">
-                    <button class="btn-close" aria-label="Delete"></button>
-                </div>
-                <img class="card-img-top img-fluid"
-                     src="${weather.weatherStateDto.weatherIconUrl}"
-                     alt="Weather icon">
-                <div class="card-body d-flex flex-column">
-                    <h1 class="card-text">${weather.temperatureDto.value}°C</h1>
-                    <h3 class="card-title">${weather.locationDto.name}, ${weather.locationDto.countryCode}</h3>
-                    <p class="card-text mb-1">Feels like <span>${weather.temperatureDto.feelsLike}</span>°C.
-                        <span>${weather.weatherStateDto.description}</span>
-                    </p>
-                    <p class="card-text mb-1">Humidity: ${weather.humidityDto.value}%</p>
-                    <p class="card-text mb-1">Pressure: ${weather.atmosphericPressureDto.value} ${weather.atmosphericPressureDto.unit}</p>
-                    <p class="card-text mb-1">Wind: ${weather.windDto.speed} ${weather.windDto.unit} at ${weather.windDto.degrees}°</p>
-                    <p class="card-text mb-1">Cloudiness: ${weather.cloudsDto.value}${weather.cloudsDto.unit}</p>
-                    <p class="card-text mb-1">Rain (last 3 hours): ${weather.rainDto ? weather.rainDto.threeHourLevel : 'N/A'} ${weather.rainDto ? weather.rainDto.unit : ''}</p>
-                    <p class="card-text mb-1">Snow (last 3 hours): ${weather.snowDto ? weather.snowDto.threeHourLevel : 'N/A'} ${weather.snowDto ? weather.snowDto.unit : ''}</p>
-                    <p class="card-text mb-1">Sunrise: ${new Date(weather.locationDto.sunriseTime).toLocaleTimeString()}</p>
-                    <p class="card-text mb-1">Sunset: ${new Date(weather.locationDto.sunsetTime).toLocaleTimeString()}</p>
-                </div>
+        <div class="card h-100 position-relative weather-card fade-in">
+            <div class="position-absolute weather-card-delete-form">
+                <button class="btn-close" aria-label="Delete"></button>
             </div>
-        `;
+            <img class="card-img-top img-fluid"
+                 src="${weather.weatherStateDto.weatherIconUrl}"
+                 alt="Weather icon">
+            <div class="card-body d-flex flex-column">
+                <h1 class="card-text">${weather.temperatureDto.value}°C</h1>
+                <h3 class="card-title">${weather.locationDto.name}, ${weather.locationDto.countryCode}</h3>
+                <p class="card-text mb-1">Feels like <span>${weather.temperatureDto.feelsLike}</span>°C.
+                    <span>${weather.weatherStateDto.description}</span> <!-- Исправлено -->
+                </p>
+                <p class="card-text mb-1">Humidity: ${weather.humidityDto.value}%</p>
+                <p class="card-text mb-1">Pressure: ${weather.atmosphericPressureDto.value} ${weather.atmosphericPressureDto.unit}</p>
+                <p class="card-text mb-1">Wind: ${weather.windDto.speed} ${weather.windDto.unit} at ${weather.windDto.degrees}°</p>
+                <p class="card-text mb-1">Cloudiness: ${weather.cloudsDto.value}${weather.cloudsDto.unit}</p>
+                <p class="card-text mb-1">Rain (last 3 hours): ${weather.rainDto ? weather.rainDto.threeHourLevel : 'N/A'} ${weather.rainDto ? weather.rainDto.unit : ''}</p>
+                <p class="card-text mb-1">Snow (last 3 hours): ${weather.snowDto ? weather.snowDto.threeHourLevel : 'N/A'} ${weather.snowDto ? weather.snowDto.unit : ''}</p>
+                <p class="card-text mb-1">Sunrise: ${new Date(weather.locationDto.sunriseTime).toLocaleTimeString()}</p>
+                <p class="card-text mb-1">Sunset: ${new Date(weather.locationDto.sunsetTime).toLocaleTimeString()}</p>
+            </div>
+        </div>
+    `;
         $('#weather-results').html(weatherHtml).show().addClass('fade-in');
         $('#search-form').slideUp();
     }

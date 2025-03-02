@@ -13,7 +13,11 @@ import ru.org.myapp.mapper.IWeatherForecastMapper;
 import ru.org.myapp.mapper.IWeatherMapper;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static ru.org.myapp.util.Const.forecast;
+import static ru.org.myapp.util.Const.weather;
 
 @Service
 @RequiredArgsConstructor
@@ -24,30 +28,30 @@ public class ServiceOpenWeatherApi {
     private final IWeatherMapper weatherMapper;
     private final IWeatherForecastMapper weatherForecastMapper;
 
-    @Cacheable(value = "weather", key = "#city")
+    @Cacheable(value = weather, key = "#city")
     public WeatherDto getWeather(String city) {
         try {
-            return Optional.ofNullable(weatherEntityService.getWeatherByCity(city))
+            return Optional.of(weatherEntityService.getWeatherByCity(city))
                     .map(weatherMapper::entityToDto)
                     .orElseGet(() -> weatherMapper.entityToDto(
                             weatherEntityService.saveEntity(
-                                    weatherMapper.libToEntity(
+                                    Objects.requireNonNull(weatherMapper.libToEntity(
                                             client.currentWeather()
                                                     .single()
                                                     .byCityName(city)
                                                     .language(Language.ENGLISH)
                                                     .unitSystem(UnitSystem.METRIC)
                                                     .retrieve()
-                                                    .asJava()))));
+                                                    .asJava())))));
         } catch (RuntimeException e) {
             throw new WeatherServiceException(e.getMessage());
         }
     }
 
-    @Cacheable(value = "forecast", key = "#city")
+    @Cacheable(value = forecast, key = "#city")
     public List<WeatherForecastDto> getForecastInfo(String city) {
         try {
-            return Optional.ofNullable(weatherForecastService.findAll(city))
+            return Optional.of(weatherForecastService.findAll(city))
                     .filter(forecast -> !forecast.isEmpty())
                     .map(weatherForecastMapper::entityToDtoList)
                     .orElseGet(() -> weatherForecastMapper.entityToDtoList(

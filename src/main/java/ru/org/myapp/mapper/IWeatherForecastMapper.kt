@@ -1,44 +1,29 @@
-package ru.org.myapp.mapper;
+package ru.org.myapp.mapper
 
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Temperature;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.forecast.Rain;
-import com.github.prominence.openweathermap.api.model.forecast.Snow;
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
-import com.github.prominence.openweathermap.api.model.forecast.Wind;
-import org.mapstruct.Mapper;
-
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.Named;
-import ru.org.myapp.dto.WeatherForecastDto;
-import ru.org.myapp.entity.forecast.AtmosphericPressureForecastEntity;
-import ru.org.myapp.entity.forecast.CloudsForecastEntity;
-import ru.org.myapp.entity.forecast.HumidityForecastEntity;
-import ru.org.myapp.entity.forecast.RainForecastEntity;
-import ru.org.myapp.entity.forecast.SnowForecastEntity;
-import ru.org.myapp.entity.forecast.TemperatureForecastEntity;
-import ru.org.myapp.entity.forecast.WeatherForecastEntity;
-import ru.org.myapp.entity.forecast.WeatherStateForecastEntity;
-import ru.org.myapp.entity.forecast.WindForecastEntity;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import com.github.prominence.openweathermap.api.model.*
+import com.github.prominence.openweathermap.api.model.forecast.Rain
+import com.github.prominence.openweathermap.api.model.forecast.Snow
+import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast
+import com.github.prominence.openweathermap.api.model.forecast.Wind
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.MappingConstants
+import org.mapstruct.Named
+import ru.org.myapp.dto.WeatherForecastDto
+import ru.org.myapp.entity.forecast.*
+import java.util.stream.Collectors
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface IWeatherForecastMapper {
-    WeatherForecastDto.WeatherStateDto toWeatherStateDto(WeatherStateForecastEntity entity);
-    WeatherForecastDto.TemperatureDto toTemperatureDto(TemperatureForecastEntity entity);
-    WeatherForecastDto.AtmosphericPressureDto toAtmosphericPressureDto(AtmosphericPressureForecastEntity entity);
-    WeatherForecastDto.HumidityDto toHumidityDto(HumidityForecastEntity entity);
-    WeatherForecastDto.WindDto toWindDto(WindForecastEntity entity);
-    WeatherForecastDto.RainDto toRainDto(RainForecastEntity entity);
-    WeatherForecastDto.SnowDto toSnowDto(SnowForecastEntity entity);
-    WeatherForecastDto.CloudsDto toCloudsDto(CloudsForecastEntity entity);
-    List<WeatherForecastDto> entityToDtoList(List<WeatherForecastEntity> entities);
+interface IWeatherForecastMapper {
+    fun toWeatherStateDto(entity: WeatherStateForecastEntity?): WeatherForecastDto.WeatherStateDto?
+    fun toTemperatureDto(entity: TemperatureForecastEntity?): WeatherForecastDto.TemperatureDto?
+    fun toAtmosphericPressureDto(entity: AtmosphericPressureForecastEntity?): WeatherForecastDto.AtmosphericPressureDto?
+    fun toHumidityDto(entity: HumidityForecastEntity?): WeatherForecastDto.HumidityDto?
+    fun toWindDto(entity: WindForecastEntity?): WeatherForecastDto.WindDto?
+    fun toRainDto(entity: RainForecastEntity?): WeatherForecastDto.RainDto?
+    fun toSnowDto(entity: SnowForecastEntity?): WeatherForecastDto.SnowDto?
+    fun toCloudsDto(entity: CloudsForecastEntity?): WeatherForecastDto.CloudsDto?
+    fun entityToDtoList(entities: List<WeatherForecastEntity?>?): List<WeatherForecastDto?>?
 
     @Mapping(source = "weatherStateForecastEntity", target = "weatherState")
     @Mapping(source = "temperatureForecastEntity", target = "temperature")
@@ -51,28 +36,32 @@ public interface IWeatherForecastMapper {
     @Mapping(source = "forecastTime", target = "forecastTime")
     @Mapping(source = "forecastTimeISO", target = "forecastTimeISO")
     @Mapping(source = "dayTime", target = "dayTime")
-    WeatherForecastDto entityToDto(WeatherForecastEntity entity);
+    fun entityToDto(entity: WeatherForecastEntity?): WeatherForecastDto?
 
 
     @Mapping(target = "forecastTimeISO", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "dayTime", source = "forecast.dayTime")
-    @Mapping(target = "weatherStateForecastEntity", source = "forecast.weatherState", qualifiedByName = "mapWeatherStateForecast")
+    @Mapping(
+        target = "weatherStateForecastEntity",
+        source = "forecast.weatherState",
+        qualifiedByName = ["mapWeatherStateForecast"]
+    )
     @Mapping(target = "temperatureForecastEntity", source = "forecast.temperature")
     @Mapping(target = "atmosphericPressureForecastEntity", source = "forecast.atmosphericPressure")
-    @Mapping(target = "humidityForecastEntity", source = "forecast.humidity", qualifiedByName = "mapHumidity")
+    @Mapping(target = "humidityForecastEntity", source = "forecast.humidity", qualifiedByName = ["mapHumidity"])
     @Mapping(target = "windForecastEntity", source = "forecast.wind")
     @Mapping(target = "rainForecastEntity", source = "forecast.rain")
     @Mapping(target = "snowForecastEntity", source = "forecast.snow")
     @Mapping(target = "cloudsForecastEntity", source = "forecast.clouds")
     @Mapping(target = "city", source = "city")
-    WeatherForecastEntity libToEntity(WeatherForecast forecast, String city);
-    default List<WeatherForecastEntity> libToEntityList(List<WeatherForecast> forecasts, String city) {
+    fun libToEntity(forecast: WeatherForecast?, city: String?): WeatherForecastEntity
+    fun libToEntityList(forecasts: List<WeatherForecast?>?, city: String?): List<WeatherForecastEntity> {
         if (forecasts == null) {
-            return List.of();
+            return listOf()
         }
         return forecasts.stream()
-                .map(forecast -> libToEntity(forecast, city))
-                .collect(Collectors.toList());
+            .map { forecast: WeatherForecast? -> libToEntity(forecast, city) }
+            .collect(Collectors.toList())
     }
 
     @Named("mapWeatherStateForecast")
@@ -81,18 +70,18 @@ public interface IWeatherForecastMapper {
     @Mapping(target = "iconId", source = "iconId")
     @Mapping(target = "weatherConditionEnum", source = "weatherConditionEnum")
     @Mapping(target = "weatherIconUrl", source = "weatherIconUrl")
-    WeatherStateForecastEntity mapWeatherStateForecast(WeatherState weatherState);
-    TemperatureForecastEntity toTemperatureForecastEntity(Temperature temperature);
-    AtmosphericPressureForecastEntity toAtmosphericPressureForecastEntity(AtmosphericPressure atmosphericPressure);
+    fun mapWeatherStateForecast(weatherState: WeatherState?): WeatherStateForecastEntity?
+    fun toTemperatureForecastEntity(temperature: Temperature?): TemperatureForecastEntity?
+    fun toAtmosphericPressureForecastEntity(atmosphericPressure: AtmosphericPressure?): AtmosphericPressureForecastEntity?
 
     @Named("mapHumidity")
     @Mapping(target = "value", source = "value")
     @Mapping(target = "unit", source = "unit")
-    HumidityForecastEntity mapHumidity(Humidity humidity);
-    WindForecastEntity toWindForecastEntity(Wind wind);
-    RainForecastEntity toRainForecastEntity(Rain rain);
-    SnowForecastEntity toSnowForecastEntity(Snow snow);
-    CloudsForecastEntity toCloudsForecastEntity(Clouds clouds);
+    fun mapHumidity(humidity: Humidity?): HumidityForecastEntity?
+    fun toWindForecastEntity(wind: Wind?): WindForecastEntity?
+    fun toRainForecastEntity(rain: Rain?): RainForecastEntity?
+    fun toSnowForecastEntity(snow: Snow?): SnowForecastEntity?
+    fun toCloudsForecastEntity(clouds: Clouds?): CloudsForecastEntity?
 }
 
 

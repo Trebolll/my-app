@@ -7,12 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.org.myapp.entity.weather.WeatherEntity;
 
+import static ru.org.myapp.util.Const.weather;
+
 @Repository
 public interface WeatherEntityRepository extends JpaRepository<WeatherEntity, Long> {
-    @EntityGraph(value = "weather", type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT w FROM WeatherForecastEntity w" +
-            " WHERE w.city = :city " +
-            "AND w.forecastTime >= CAST(date(now()) AS timestamp)" +
-            " ORDER BY w.forecastTime DESC")
+    @EntityGraph(value = weather, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT w FROM WeatherEntity w" +
+            " WHERE w.location.name = :city " +
+            "AND w.calculationTime >= CAST(date(now()) AS timestamp)" +
+            " ORDER BY w.calculationTime DESC")
     WeatherEntity findByCity(@Param("city") String city);
 }
