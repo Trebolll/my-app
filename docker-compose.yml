@@ -2,22 +2,20 @@ version: "3.8"
 
 services:
   db:
-    image: postgres:17.2
-    container_name: myapp
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+    image: 'postgres:17.12'
     ports:
       - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - myapp-network
-
-volumes:
-  db_data:
-
-networks:
-  myapp-network:
-    driver: bridge
+    environment:
+      POSTGRES_DB: my-app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+  app:
+    image: myapp:latest
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/myapp
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"

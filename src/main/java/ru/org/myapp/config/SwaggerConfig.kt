@@ -26,7 +26,6 @@ open class SwaggerConfig {
                     .description("API для получения данных о погоде и прогнозе")
             )
     }
-
     @Bean
     open fun customizeOperation(): OperationCustomizer {
         return OperationCustomizer { operation: Operation, handlerMethod: HandlerMethod ->
