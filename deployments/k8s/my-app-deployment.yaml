@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-service-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-app-service
+    spec:
+      containers:
+        - name: my-app-service-pod
+          image: my-app:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: JAVA_OPTS
+              value: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+            - name: JAVA_ENABLE_DEBUG
+              value: "true"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: remotedebugging
+              containerPort: 5005
+              protocol: TCP
+          volumeMounts:
+            - name: application-config
+              mountPath: /config/application.yml
+              subPath: application.yml
+          livenessProbe:
+            httpGet:
+              path: /api/v1/weather  # Укажите ваш endpoint проверки здоровья
+              port: 8080
+            initialDelaySeconds: 15  # Подождите 15 секунд после запуска контейнера
+            periodSeconds: 10        # Проверяйте каждые 10 секунд
+            timeoutSeconds: 5        # Ждите ответа не более 5 секунд
+            failureThreshold: 3       # Если 3 проверки подряд не удались, перезапустите контейнер
+            successThreshold: 1       # Одна успешная проверка возвращает контейнер в здоровое состояние
+          readinessProbe:
+              httpGet:
+                path: /api/v1/weather  # Укажите ваш endpoint готовности
+                port: 8080
+              initialDelaySeconds: 5   # Подождите 5 секунд после запуска контейнера
+              periodSeconds: 10        # Проверяйте каждые 10 секунд
+              timeoutSeconds: 2        # Ждите ответа не более 2 секунд
+              failureThreshold: 3       # Если 3 проверки подряд не удались, перестаньте отправлять трафик
+              successThreshold: 1       # Одна успешная проверка возвращает контейнер в готовое состояние
+      volumes:
+        - name: application-config
+          configMap:
+            name: my-app-config-map
+  selector:
+    matchLabels:
+      app: my-app-service

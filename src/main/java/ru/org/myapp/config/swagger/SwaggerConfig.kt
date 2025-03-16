@@ -1,4 +1,4 @@
-package ru.org.myapp.config
+package ru.org.myapp.config.swagger
 
 import io.swagger.v3.oas.annotations.enums.ParameterIn
 import io.swagger.v3.oas.models.OpenAPI

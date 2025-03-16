@@ -1,4 +1,4 @@
-package ru.org.myapp.config
+package ru.org.myapp.config.weather
 
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient
 import org.springframework.beans.factory.annotation.Value

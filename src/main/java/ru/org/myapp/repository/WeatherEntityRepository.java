@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.org.myapp.entity.weather.WeatherEntity;
 
-import static ru.org.myapp.util.Const.weather;
+import static ru.org.myapp.util.Constant.weather;
 
 @Repository
 public interface WeatherEntityRepository extends JpaRepository<WeatherEntity, Long> {

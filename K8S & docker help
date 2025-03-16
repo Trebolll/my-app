@@ -1,0 +1,42 @@
+mvn clean package
+
+docker build -t my-app:latest .
+
+docker run -p 8080:8080  my-app:latest
+
+docker network create mynetwork
+
+docker run --name mypostgres --network mynetwork -e POSTGRES_DB=postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres:17.2
+
+docker run --name myapp --network mynetwork -e SPRING_DATASOURCE_URL=jdbc:postgresql://mypostgres:5432/myapp -e SPRING_DATASOURCE_USERNAME=root -e SPRING_DATASOURCE_PASSWORD=root -p 8080:8080 myapp:latest
+
+покажет версию клиента
+kubectl version --client
+
+Выполни команду для развертывания приложения:
+kubectl apply -f deployment.yml
+kubectl apply -f service.yml
+
+Проверка статуса:
+kubectl get pods
+kubectl get services
+
+Выполни команду для проверки статуса сервисов:
+kubectl get services
+
+Проверка логов подов:
+kubectl logs <pod-name>
+
+Применение манифестов:
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl get services -n projectcontour
+
+minikube start
+minikube status
+minikube stop
+minikube image load [image]
+kubectl get service, kubectl get deployment, kubectl get statefulset, kubectl get pod
+minikube dashboard
+kubectl apply -f ingress.yaml
+minikube addons enable ingress

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-app-db-statefulset
+spec:
+  replicas: 1
+  serviceName: my-app-db-service
+  template:
+    metadata:
+      labels:
+        app: my-app-db
+    spec:
+      containers:
+        - name: my-app-db-pod
+          image: postgres:17.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_PASSWORD
+              value: root
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: my-app-db-data
+              mountPath: /usr/data
+  selector:
+    matchLabels:
+      app: my-app-db
+  volumeClaimTemplates:
+    - metadata:
+        name: my-app-db-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

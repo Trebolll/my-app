@@ -16,8 +16,8 @@ import ru.org.myapp.mapper.WeatherMapper;
 
 import java.util.List;
 
-import static ru.org.myapp.util.Const.forecast;
-import static ru.org.myapp.util.Const.weather;
+import static ru.org.myapp.util.Constant.forecast;
+import static ru.org.myapp.util.Constant.weather;
 
 @Service
 @RequiredArgsConstructor

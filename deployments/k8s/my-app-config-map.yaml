@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-app-config-map
+data:
+  application.yml: |
+   com:
+   example:
+    config:
+      log: true
+      audit: true
+   springdoc:
+   swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: alpha
+   api-docs:
+      path: /v3/api-docs
+   spring:
+      application:
+        name: my-app-service
+   open.weather:
+    sdk:
+    key: 7e37c875a0722eb2f61a58b26135b98d
+    logging:
+      level:
+    org:
+      springframework: info
+    springdoc: info
+    liquibase:
+      change-log: classpath:db/changelog/db.changelog-master.xml
+    datasource:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://myapp-db-service:5432/postgres
+      username: root
+      password: root
+      jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        use_sql_comments: true
+        mvc:
+        pathmatch:
+          matching-strategy: ant_path_matcher

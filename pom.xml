@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.org.myapp</groupId>
-    <artifactId>my-app</artifactId>
+    <artifactId>yml</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -99,16 +99,58 @@
             <artifactId>caffeine</artifactId>
             <version>3.0.4</version>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.uber.cadence</groupId>
+            <artifactId>cadence-client</artifactId>
+            <version>3.12.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.9</version>
+        </dependency>
+
+        <!-- Uber M3 Tally Core -->
+        <dependency>
+            <groupId>com.uber.m3</groupId>
+            <artifactId>tally-core</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+
+        <!-- Uber M3 Tally Prometheus -->
+        <dependency>
+            <groupId>com.uber.m3</groupId>
+            <artifactId>tally-prometheus</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+
+        <!-- Prometheus Simpleclient -->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+
+        <!-- Prometheus Simpleclient HTTPServer -->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_httpserver</artifactId>
+            <version>0.10.0</version>
         </dependency>
     </dependencies>
 

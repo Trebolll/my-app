@@ -8,7 +8,7 @@ import ru.org.myapp.entity.forecast.WeatherForecastEntity;
 
 import java.util.List;
 
-import static ru.org.myapp.util.Const.forecast;
+import static ru.org.myapp.util.Constant.forecast;
 
 @Repository
 public interface WeatherForecastEntityRepository extends JpaRepository<WeatherForecastEntity, Long> {
