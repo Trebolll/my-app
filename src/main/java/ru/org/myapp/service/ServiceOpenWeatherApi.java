@@ -14,8 +14,7 @@ import ru.org.myapp.entity.weather.WeatherEntity;
 import ru.org.myapp.exception.WeatherServiceException;
 import ru.org.myapp.mapper.WeatherForecastMapper;
 import ru.org.myapp.mapper.WeatherMapper;
-import ru.org.myapp.workflow.activity.ForecastActivity;
-import ru.org.myapp.workflow.activity.ForecastActivitySave;
+import ru.org.myapp.cadence.weather.activity.ForecastActivitySave;
 
 import java.util.List;
 

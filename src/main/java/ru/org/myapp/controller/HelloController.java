@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.org.myapp.entity.common.SampleMessage;
-import ru.org.myapp.workflow.HelloWorldWorkflow;
+import ru.org.myapp.cadence.samples.HelloWorldWorkflow;
 
 
 @RestController

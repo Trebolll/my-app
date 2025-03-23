@@ -1,4 +1,4 @@
 scrape_configs:
-  - job_name: 'cadence'
+  - job_name: 'cadenceuber'
     static_configs:
       - targets: ['localhost:8000', 'localhost:8001', 'localhost:8002', 'localhost:8003'] # порты Cadence History, Frontend, Matching, и Worker

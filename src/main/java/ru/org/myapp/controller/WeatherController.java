@@ -15,11 +15,9 @@ import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.entity.common.Response;
 
 import ru.org.myapp.entity.common.ResponseStatus;
-import ru.org.myapp.exception.WeatherCadenceException;
 import ru.org.myapp.exception.WeatherServiceException;
-import ru.org.myapp.service.ServiceOpenWeatherApi;
-import ru.org.myapp.workflow.ForecastWorkflow;
-import ru.org.myapp.workflow.WeatherWorkflow;
+import ru.org.myapp.cadence.weather.workflow.ForecastWorkflow;
+import ru.org.myapp.cadence.weather.workflow.WeatherWorkflow;
 
 import java.util.List;
 

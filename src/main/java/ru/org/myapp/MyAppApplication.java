@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EntityScan(basePackages = "ru.org.myapp.entity")
 @EnableJpaRepositories(basePackages = "ru.org.myapp.repository")
-@ComponentScan({"ru.org.myapp", "ru.org.myapp.config.cadence"})
+@ComponentScan({"ru.org.myapp", "ru.org.myapp.config.cadenceuber"})
 @EnableCaching
 public class MyAppApplication {
     public static void main(String[] args) {
