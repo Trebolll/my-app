@@ -15,23 +15,11 @@
  *  permissions and limitations under the License.
  */
 
-package ru.org.myapp.workflows.impl;
+package ru.org.myapp.workflow;
 
+import com.uber.cadence.workflow.WorkflowMethod;
 
-import com.uber.cadence.workflow.Workflow;
-import org.slf4j.Logger;
-import ru.org.myapp.entity.common.SampleMessage;
-import ru.org.myapp.workflows.HelloWorldWorkflow;
-
-public class HelloWorldWorkflowImpl implements HelloWorldWorkflow {
-  private final Logger logger = Workflow.getLogger(HelloWorldWorkflowImpl.class);
-
-  @Override
-  public String sayHello(SampleMessage message) {
-    logger.info("executing HelloWorldWorkflow::sayHello");
-
-    String result = "Hello, " + message.GetMessage();
-    logger.info("output: " + result);
-    return result;
-  }
+public interface ChildWorkflow {
+    @WorkflowMethod
+    String greetInChild(String msg);
 }

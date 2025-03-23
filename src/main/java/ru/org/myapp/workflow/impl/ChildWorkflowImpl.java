@@ -15,11 +15,14 @@
  *  permissions and limitations under the License.
  */
 
-package ru.org.myapp.workflows;
+package ru.org.myapp.workflow.impl;
 
-import com.uber.cadence.workflow.WorkflowMethod;
 
-public interface ChildWorkflow {
-  @WorkflowMethod
-  String greetInChild(String msg);
+import ru.org.myapp.workflow.ChildWorkflow;
+
+public class ChildWorkflowImpl implements ChildWorkflow {
+  @Override
+  public String greetInChild(String msg) {
+    return "Child Workflow, " + msg + "!";
+  }
 }

@@ -23,44 +23,97 @@ import com.uber.cadence.serviceclient.ClientOptions;
 import com.uber.cadence.serviceclient.WorkflowServiceTChannel;
 import com.uber.cadence.worker.Worker;
 import com.uber.cadence.worker.WorkerFactory;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.ApplicationContext;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
-import ru.org.myapp.workflows.impl.ChildWorkflowImpl;
-import ru.org.myapp.workflows.impl.HelloWorldWorkflowImpl;
-import ru.org.myapp.workflows.impl.ParentWorkflowImpl;
-import ru.org.myapp.workflows.impl.SignalWorkflowImpl;
+import org.springframework.context.annotation.Primary;
+import ru.org.myapp.config.cadence.date.CadenceDataConverter;
+import ru.org.myapp.mapper.WeatherForecastMapper;
+import ru.org.myapp.service.ServiceOpenWeatherApi;
+import ru.org.myapp.service.WeatherForecastService;
+import ru.org.myapp.workflow.activity.impl.ForecastActivityImpl;
+import ru.org.myapp.workflow.activity.impl.ForecastActivitySaveImpl;
+import ru.org.myapp.workflow.activity.impl.GreetingActivityImpl;
+import ru.org.myapp.workflow.activity.impl.WeatherActivityImpl;
+import ru.org.myapp.workflow.impl.*;
 
-import static ru.org.myapp.util.Constant.DOMAIN;
-import static ru.org.myapp.util.Constant.TASK_LIST;
+import static ru.org.myapp.util.Constant.*;
 
 
 @Configuration
+@Slf4j
 public class CadenceAutoConfiguration {
 
-  @Bean
-  public WorkflowClient workflowClient() {
-    return WorkflowClient.newInstance(
-        new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
-        WorkflowClientOptions.newBuilder().setDomain(DOMAIN).build());
-  }
+    @Bean
+    public WorkflowClient workflowClient() {
+        return WorkflowClient.newInstance(
+                new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
+                WorkflowClientOptions
+                        .newBuilder()
+                        .setDataConverter(CadenceDataConverter.cadenceJsonDataConverter())
+                        .setDomain(DOMAIN).build());
+    }
 
-  @EventListener(ApplicationStartedEvent.class)
-  public void startWorker(ApplicationStartedEvent event) {
-    System.out.println("Starting workers");
+    @Bean
+    @Qualifier("workflowClientWeather")
+    @Primary
+    public WorkflowClient workflowClientWeather() {
+        return WorkflowClient.newInstance(
+                new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
+                WorkflowClientOptions
+                        .newBuilder()
+                        .setDataConverter(CadenceDataConverter.cadenceJsonDataConverter())
+                        .setDomain(DOMAIN_BATCHER)
+                        .build());
+    }
 
-    ApplicationContext context = event.getApplicationContext();
-    WorkflowClient workflowClient = context.getBean(WorkflowClient.class);
-    WorkerFactory factory = WorkerFactory.newInstance(workflowClient);
-    Worker worker = factory.newWorker(TASK_LIST);
+    @Bean
+    public WorkerFactory startWorker(ObjectProvider<WorkflowClient> workflowClientProvider) {
+        log.info("Starting workers Hello World");
 
-    worker.registerWorkflowImplementationTypes(
-        HelloWorldWorkflowImpl.class,
-        SignalWorkflowImpl.class,
-        ParentWorkflowImpl.class,
-        ChildWorkflowImpl.class);
-    factory.start();
-  }
+        var workflowClient = workflowClientProvider.getIfAvailable();
+        var factory = WorkerFactory.newInstance(workflowClient);
+        var worker = factory.newWorker(TASK_LIST);
+
+        worker.registerWorkflowImplementationTypes(
+                HelloWorldWorkflowImpl.class,
+                SignalWorkflowImpl.class,
+                ParentWorkflowImpl.class,
+                ChildWorkflowImpl.class);
+        worker.registerActivitiesImplementations(new GreetingActivityImpl());
+        factory.start();
+        return factory;
+    }
+
+    @Bean
+    public WorkerFactory workerWeather(ObjectProvider<WorkflowClient> workflowClientProvider,
+                                       ObjectProvider<ServiceOpenWeatherApi> serviceOpenWeatherApiProvider,
+                                       ObjectProvider<WeatherForecastService> weatherForecastServices,
+                                       ObjectProvider<WeatherForecastMapper> weatherForecastMapper) {
+
+        var workflowClient = workflowClientProvider.getIfAvailable();
+        var serviceOpenWeatherApi = serviceOpenWeatherApiProvider.getIfAvailable();
+        var weatherForecastService = weatherForecastServices.getIfAvailable();
+        var factory = WorkerFactory.newInstance(workflowClient);
+        var worker = factory.newWorker(TASK_LIST_WEATHER_TRACKER);
+        var forecastMapper = weatherForecastMapper.getIfAvailable();
+
+        worker.registerWorkflowImplementationTypes(
+                WeatherWorkflowImpl.class);
+        worker.addWorkflowImplementationFactory(ForecastWorkflowImpl.class, () ->
+                new ForecastWorkflowImpl(forecastMapper)
+        );
+        worker.registerActivitiesImplementations(
+                new WeatherActivityImpl(serviceOpenWeatherApi),
+                new ForecastActivityImpl(serviceOpenWeatherApi),
+                new ForecastActivitySaveImpl(weatherForecastService)
+        );
+
+
+        factory.start();
+        log.info("Workers for Weather/Forecast started");
+        return factory;
+    }
 }

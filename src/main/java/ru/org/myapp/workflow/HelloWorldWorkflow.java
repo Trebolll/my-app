@@ -15,14 +15,16 @@
  *  permissions and limitations under the License.
  */
 
-package ru.org.myapp.workflows.impl;
+package ru.org.myapp.workflow;
 
+import com.uber.cadence.workflow.WorkflowMethod;
+import ru.org.myapp.entity.common.SampleMessage;
 
-import ru.org.myapp.workflows.ChildWorkflow;
+import static ru.org.myapp.util.Constant.TASK_LIST;
 
-public class ChildWorkflowImpl implements ChildWorkflow {
-  @Override
-  public String greetInChild(String msg) {
-    return "Hello, " + msg + "!";
-  }
+public interface HelloWorldWorkflow {
+    @WorkflowMethod(
+            executionStartToCloseTimeoutSeconds = 10, taskList = TASK_LIST
+    )
+    String sayHello(SampleMessage message);
 }

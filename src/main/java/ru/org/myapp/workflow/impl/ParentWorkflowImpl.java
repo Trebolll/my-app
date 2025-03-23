@@ -15,7 +15,7 @@
  *  permissions and limitations under the License.
  */
 
-package ru.org.myapp.workflows.impl;
+package ru.org.myapp.workflow.impl;
 
 
 import com.uber.cadence.WorkflowExecution;
@@ -23,8 +23,8 @@ import com.uber.cadence.workflow.Async;
 import com.uber.cadence.workflow.Promise;
 import com.uber.cadence.workflow.Workflow;
 import ru.org.myapp.entity.common.SampleMessage;
-import ru.org.myapp.workflows.ChildWorkflow;
-import ru.org.myapp.workflows.ParentWorkflow;
+import ru.org.myapp.workflow.ChildWorkflow;
+import ru.org.myapp.workflow.ParentWorkflow;
 
 public class ParentWorkflowImpl implements ParentWorkflow {
   @Override

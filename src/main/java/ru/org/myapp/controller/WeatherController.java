@@ -2,6 +2,8 @@ package ru.org.myapp.controller;
 
 import com.example.config.annotation.Audit;
 import com.example.config.annotation.Log;
+import com.uber.cadence.client.WorkflowClient;
+import com.uber.cadence.client.WorkflowOptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +15,34 @@ import ru.org.myapp.dto.WeatherForecastDto;
 import ru.org.myapp.entity.common.Response;
 
 import ru.org.myapp.entity.common.ResponseStatus;
+import ru.org.myapp.exception.WeatherCadenceException;
 import ru.org.myapp.exception.WeatherServiceException;
 import ru.org.myapp.service.ServiceOpenWeatherApi;
+import ru.org.myapp.workflow.ForecastWorkflow;
+import ru.org.myapp.workflow.WeatherWorkflow;
 
 import java.util.List;
+
+import static ru.org.myapp.util.Constant.TASK_LIST_WEATHER_TRACKER;
 
 @RestController
 @RequiredArgsConstructor
 public class WeatherController implements WeatherRestApi {
-    private final ServiceOpenWeatherApi serviceOpenWeatherApi;
+    private final WorkflowClient workflowClient;
 
     @Audit
     @Log
     @Override
     public ResponseEntity<Response<WeatherDto>> getWeather(@RequestParam String city) {
         try {
+            WeatherWorkflow workflowWeather = workflowClient.newWorkflowStub(WeatherWorkflow.class, new WorkflowOptions.Builder()
+                    .setTaskList(TASK_LIST_WEATHER_TRACKER)
+                    .build());
+            WeatherDto weather = workflowWeather.getWeather(city);
             return ResponseEntity.ok(Response.<WeatherDto>builder().status(ResponseStatus.builder()
-                                    .code(HttpStatus.OK.value())
-                                    .description("Успешный запрос")
-                                    .build()).data(serviceOpenWeatherApi.getWeather(city)).build());
+                    .code(HttpStatus.OK.value())
+                    .description("Успешный запрос")
+                    .build()).data(weather).build());
         } catch (WeatherServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Response.<WeatherDto>builder()
@@ -46,11 +57,16 @@ public class WeatherController implements WeatherRestApi {
     @Override
     public ResponseEntity<Response<List<WeatherForecastDto>>> getForecast(@RequestParam String city) {
         try {
+          ForecastWorkflow forecastWorkflow = workflowClient.newWorkflowStub(ForecastWorkflow.class,
+                  new WorkflowOptions.Builder()
+                    .setTaskList(TASK_LIST_WEATHER_TRACKER)
+                    .build());
+            List<WeatherForecastDto> forecastInfo = forecastWorkflow.getForecastInfo(city);
             return ResponseEntity.ok(Response.<List<WeatherForecastDto>>builder().status(ResponseStatus.builder()
                                     .code(HttpStatus.OK.value())
                                     .description("Успешный запрос")
                                     .build())
-                            .data(serviceOpenWeatherApi.getForecastInfo(city)).build());
+                            .data(forecastInfo).build());
         } catch (WeatherServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Response.<List<WeatherForecastDto>>builder()

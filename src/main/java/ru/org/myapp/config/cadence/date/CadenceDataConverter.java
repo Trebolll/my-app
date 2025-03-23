@@ -15,26 +15,26 @@
  *  permissions and limitations under the License.
  */
 
-package ru.org.myapp.config.cadence;
+package ru.org.myapp.config.cadence.date;
 
 
-import com.google.gson.TypeAdapterFactory;
 import com.uber.cadence.converter.JsonDataConverter;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.ServiceLoader;
 
 // This singleton JsonDataConverter should be universally used in all components that require a
 // JsonDataConverter. Specifically in Cadence's case, WorkflowClient uses Json serialize function
 // and Worker uses deserialize function, therefore they have to match with one another.
 public class CadenceDataConverter {
-  public static JsonDataConverter cadenceJsonDataConverter() {
-    return new JsonDataConverter(
-        gsonBuilder -> {
-          for (TypeAdapterFactory factory : ServiceLoader.load(TypeAdapterFactory.class)) {
-            gsonBuilder.registerTypeAdapterFactory(factory);
-          }
-          return gsonBuilder.registerTypeAdapter(ZonedDateTime.class, new ZonedDatetimeConverter());
-        });
-  }
+    public static JsonDataConverter cadenceJsonDataConverter() {
+        return new JsonDataConverter(
+                gsonBuilder -> {
+                    gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeConverter());
+                    gsonBuilder.registerTypeAdapter(ZonedDateTime.class, new ZonedDatetimeConverter());
+                    gsonBuilder.registerTypeAdapter(ZoneOffset.class, new ZoneOffsetConverter());
+                    return gsonBuilder;
+                });
+    }
 }

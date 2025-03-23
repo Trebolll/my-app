@@ -15,8 +15,7 @@
  *  permissions and limitations under the License.
  */
 
-package ru.org.myapp.workflows;
-
+package ru.org.myapp.workflow;
 
 
 import com.uber.cadence.workflow.SignalMethod;
@@ -24,12 +23,12 @@ import com.uber.cadence.workflow.WorkflowMethod;
 import ru.org.myapp.entity.common.SampleMessage;
 
 public interface SignalWorkflow {
-  @WorkflowMethod
-  void getGreeting(SampleMessage sampleMessage);
+    @WorkflowMethod
+    void getGreeting(SampleMessage sampleMessage);
 
-  @SignalMethod
-  void waitForGreeting(String greeting);
+    @SignalMethod
+    void waitForGreeting(String greeting);
 
-  @SignalMethod
-  void cancel();
+    @SignalMethod
+    void cancel();
 }

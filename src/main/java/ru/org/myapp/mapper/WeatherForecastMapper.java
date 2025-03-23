@@ -94,4 +94,23 @@ public interface WeatherForecastMapper {
     SnowForecastEntity toSnowForecastEntity(Snow snow);
 
     CloudsForecastEntity toCloudsForecastEntity(Clouds clouds);
+
+    @Mapping(target = "forecastTimeISO", source = "forecastTimeISO")
+    @Mapping(target = "dayTime", source = "dayTime")
+    @Mapping(target = "weatherStateForecastEntity", source = "weatherState")
+    @Mapping(target = "temperatureForecastEntity", source = "temperature")
+    @Mapping(target = "atmosphericPressureForecastEntity", source = "atmosphericPressure")
+    @Mapping(target = "humidityForecastEntity", source = "humidity")
+    @Mapping(target = "windForecastEntity", source = "wind")
+    @Mapping(target = "rainForecastEntity", source = "rain")
+    @Mapping(target = "snowForecastEntity", source = "snow")
+    @Mapping(target = "cloudsForecastEntity", source = "clouds")
+    @Mapping(target = "city", source = "city")
+    WeatherForecastEntity dtoToEntity(WeatherForecastDto dto);
+
+    default List<WeatherForecastEntity> dtoToEntityList(List<WeatherForecastDto> dtos) {
+        return dtos.stream()
+                .map(this::dtoToEntity)
+                .collect(Collectors.toList());
+    }
 }

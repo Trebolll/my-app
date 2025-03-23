@@ -3,6 +3,7 @@ package ru.org.myapp.service;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import ru.org.myapp.entity.weather.WeatherEntity;
 import ru.org.myapp.exception.WeatherServiceException;
 import ru.org.myapp.mapper.WeatherForecastMapper;
 import ru.org.myapp.mapper.WeatherMapper;
+import ru.org.myapp.workflow.activity.ForecastActivity;
+import ru.org.myapp.workflow.activity.ForecastActivitySave;
 
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class ServiceOpenWeatherApi {
     private final WeatherForecastService weatherForecastService;
     private final WeatherForecastMapper weatherForecastMapper;
     private final WeatherMapper weatherMapper;
+    private final ForecastActivitySave forecastActivitySave;
+
+
 
     @Cacheable(value = weather, key = "#city")
     public WeatherDto getWeather(String city) {
@@ -58,16 +64,16 @@ public class ServiceOpenWeatherApi {
             if (!forecastEntities.isEmpty()) {
                 return weatherForecastMapper.entityToDtoList(forecastEntities);
             } else {
-                return weatherForecastMapper.entityToDtoList(
-                        weatherForecastService.saveList(
-                                weatherForecastMapper.libToEntityList(
-                                        client.forecast5Day3HourStep()
-                                                .byCityName(city)
-                                                .language(Language.ENGLISH)
-                                                .unitSystem(UnitSystem.METRIC)
-                                                .retrieve()
-                                                .asJava()
-                                                .getWeatherForecasts(), city)));
+                List<WeatherForecast> forecast = client.forecast5Day3HourStep()
+                        .byCityName(city)
+                        .language(Language.ENGLISH)
+                        .unitSystem(UnitSystem.METRIC)
+                        .retrieve()
+                        .asJava()
+                        .getWeatherForecasts();
+
+                List<WeatherForecastEntity> savedForecastEntities = forecastActivitySave.saveForecast(weatherForecastMapper.libToEntityList(forecast, city));
+                return weatherForecastMapper.entityToDtoList(savedForecastEntities);
             }
         } catch (RuntimeException e) {
             throw new WeatherServiceException(e.getMessage());
